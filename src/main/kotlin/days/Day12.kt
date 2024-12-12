@@ -1,5 +1,6 @@
 package me.salmonmoses.days
 
+import me.salmonmoses.utils.DequeIterator
 import me.salmonmoses.utils.Grid
 import me.salmonmoses.utils.GridPoint
 import org.koin.core.annotation.Single
@@ -60,8 +61,7 @@ class Day12 : DayTask {
         var perimeter = 0L
         region.add(start)
         frontier.add(start)
-        while (frontier.isNotEmpty()) {
-            val nextPoint = frontier.removeFirst()
+        for (nextPoint in DequeIterator(frontier)) {
             if (nextPoint in visited) {
                 continue
             }
@@ -90,8 +90,7 @@ class Day12 : DayTask {
         var sides = 0L
         region.add(start)
         frontier.add(start)
-        while (frontier.isNotEmpty()) {
-            val nextPoint = frontier.removeFirst()
+        for (nextPoint in DequeIterator(frontier)) {
             if (nextPoint in visited) {
                 continue
             }

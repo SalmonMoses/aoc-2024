@@ -1,5 +1,6 @@
 package me.salmonmoses.days
 
+import me.salmonmoses.utils.DequeIterator
 import me.salmonmoses.utils.Grid
 import me.salmonmoses.utils.GridPoint
 import org.koin.core.annotation.Single
@@ -39,8 +40,7 @@ class Day10 : DayTask {
         val frontier = ArrayDeque<GridPoint>()
         val visited = mutableSetOf<GridPoint>()
         frontier.addLast(start)
-        while (frontier.isNotEmpty()) {
-            val current = frontier.removeFirst()
+        for (current in DequeIterator(frontier)) {
             if (current in visited) {
                 continue
             }
@@ -64,8 +64,7 @@ class Day10 : DayTask {
         var trails = 1
         val frontier = ArrayDeque<GridPoint>()
         frontier.addLast(start)
-        while (frontier.isNotEmpty()) {
-            val current = frontier.removeFirst()
+        for (current in DequeIterator(frontier)) {
             if (grid[current] != 9) {
                 val neighbors = grid.getNeighbors(current)
                 val nextSlopes = neighbors.filter { grid[it] - grid[current] == 1 }
