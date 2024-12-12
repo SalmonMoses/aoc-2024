@@ -24,17 +24,18 @@ class Day11 : DayTask {
     private fun blink(stones: Map<Long, Long>): Map<Long, Long> {
         val newStones = mutableMapOf<Long, Long>()
         stones.forEach { (stone, amount) ->
+            val digits = stone.toString()
             if (stone == 0L) {
                 newStones[1L] = newStones[1L]?.plus(amount) ?: amount
-            } else if (stone.toString().length % 2 == 0) {
-                val digits = stone.toString()
+            } else if (digits.length % 2 == 0) {
                 val sizeMiddle = digits.length / 2
                 val left = digits.substring(0, sizeMiddle).toLong()
                 val right = digits.substring(sizeMiddle).toLong()
                 newStones[left] = newStones[left]?.plus(amount) ?: amount
                 newStones[right] = newStones[right]?.plus(amount) ?: amount
             } else {
-                newStones[stone * 2024] = newStones[stone * 2024]?.plus(amount) ?: amount
+                val multipliedStone = stone * 2024
+                newStones[multipliedStone] = newStones[multipliedStone]?.plus(amount) ?: amount
             }
         }
         return newStones

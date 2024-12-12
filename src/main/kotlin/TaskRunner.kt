@@ -51,6 +51,14 @@ class TaskRunner(tasks: List<DayTask>, val inputService: InputService) {
         runDay(today)
     }
 
+    fun runAll(excluded: Set<Int> = setOf()) {
+        (1..25).filter { it !in excluded }.forEach { day ->
+            println(Colored.backgroundForeground("   DAY $day   ", OutputColor.YELLOW, OutputColor.BLACK))
+            runDay(day)
+            println()
+        }
+    }
+
     private fun checkSpec(day: DayTask, solver: DayTask.(List<String>) -> String, spec: TaskSpec, title: String) {
         val time = System.currentTimeMillis()
         val actual = day.solver(spec.input.split("\n"))
