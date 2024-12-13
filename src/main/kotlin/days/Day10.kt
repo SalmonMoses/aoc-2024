@@ -2,7 +2,7 @@ package me.salmonmoses.days
 
 import me.salmonmoses.utils.DequeIterator
 import me.salmonmoses.utils.Grid
-import me.salmonmoses.utils.GridPoint
+import me.salmonmoses.utils.Vector
 import org.koin.core.annotation.Single
 
 @Single
@@ -31,14 +31,14 @@ class Day10 : DayTask {
                     "10456732", "81"
         )
 
-    private fun traceTrailToNine(start: GridPoint, grid: Grid<Int>): Int {
+    private fun traceTrailToNine(start: Vector, grid: Grid<Int>): Int {
         if (!grid.isValid(start) || grid[start] != 0) {
             return 0
         }
 
         var visitedNines = 0
-        val frontier = ArrayDeque<GridPoint>()
-        val visited = mutableSetOf<GridPoint>()
+        val frontier = ArrayDeque<Vector>()
+        val visited = mutableSetOf<Vector>()
         frontier.addLast(start)
         for (current in DequeIterator(frontier)) {
             if (current in visited) {
@@ -56,13 +56,13 @@ class Day10 : DayTask {
         return visitedNines
     }
 
-    private fun traceTrailNumber(start: GridPoint, grid: Grid<Int>): Int {
+    private fun traceTrailNumber(start: Vector, grid: Grid<Int>): Int {
         if (!grid.isValid(start) || grid[start] != 0) {
             return 0
         }
 
         var trails = 1
-        val frontier = ArrayDeque<GridPoint>()
+        val frontier = ArrayDeque<Vector>()
         frontier.addLast(start)
         for (current in DequeIterator(frontier)) {
             if (grid[current] != 9) {

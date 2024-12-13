@@ -2,28 +2,28 @@ package me.salmonmoses.days
 
 import me.salmonmoses.utils.DequeIterator
 import me.salmonmoses.utils.Grid
-import me.salmonmoses.utils.GridPoint
+import me.salmonmoses.utils.Vector
 import org.koin.core.annotation.Single
 
 val neighbors = listOf(
-    GridPoint(1, 0),
-    GridPoint(-1, 0),
-    GridPoint(0, 1),
-    GridPoint(0, -1)
+    Vector(1, 0),
+    Vector(-1, 0),
+    Vector(0, 1),
+    Vector(0, -1)
 )
 
 val corners = listOf(
-    listOf(GridPoint(0, -1), GridPoint(1, -1), GridPoint(1, 0)),
-    listOf(GridPoint(0, 1), GridPoint(1, 1), GridPoint(1, 0)),
-    listOf(GridPoint(0, -1), GridPoint(-1, -1), GridPoint(-1, 0)),
-    listOf(GridPoint(0, 1), GridPoint(-1, 1), GridPoint(-1, 0)),
+    listOf(Vector(0, -1), Vector(1, -1), Vector(1, 0)),
+    listOf(Vector(0, 1), Vector(1, 1), Vector(1, 0)),
+    listOf(Vector(0, -1), Vector(-1, -1), Vector(-1, 0)),
+    listOf(Vector(0, 1), Vector(-1, 1), Vector(-1, 0)),
 )
 
-data class Region(val points: Set<GridPoint>, val perimeter: Long) {
+data class Region(val points: Set<Vector>, val perimeter: Long) {
     val price = points.size.toLong() * perimeter
 }
 
-data class SideRegion(val points: Set<GridPoint>, val sides: Long) {
+data class SideRegion(val points: Set<Vector>, val sides: Long) {
     val price = points.size.toLong() * sides
 }
 
@@ -53,10 +53,10 @@ class Day12 : DayTask {
                     "AAAAAA", "368"
         )
 
-    private fun findRegion(grid: Grid<Char>, start: GridPoint): Region {
-        val visited = mutableSetOf<GridPoint>()
-        val frontier = ArrayDeque<GridPoint>()
-        val region = mutableSetOf<GridPoint>()
+    private fun findRegion(grid: Grid<Char>, start: Vector): Region {
+        val visited = mutableSetOf<Vector>()
+        val frontier = ArrayDeque<Vector>()
+        val region = mutableSetOf<Vector>()
         val regionChar = grid[start]
         var perimeter = 0L
         region.add(start)
@@ -82,10 +82,10 @@ class Day12 : DayTask {
         return Region(region, perimeter)
     }
 
-    private fun findRegionWithSides(grid: Grid<Char>, start: GridPoint): SideRegion {
-        val visited = mutableSetOf<GridPoint>()
-        val frontier = ArrayDeque<GridPoint>()
-        val region = mutableSetOf<GridPoint>()
+    private fun findRegionWithSides(grid: Grid<Char>, start: Vector): SideRegion {
+        val visited = mutableSetOf<Vector>()
+        val frontier = ArrayDeque<Vector>()
+        val region = mutableSetOf<Vector>()
         val regionChar = grid[start]
         var sides = 0L
         region.add(start)
@@ -103,8 +103,7 @@ class Day12 : DayTask {
             region.add(nextPoint)
 
             sides += corners.map { corner ->
-                val cornerNeighbors = corner
-                    .map { it + nextPoint }
+                val cornerNeighbors = corner.map { it + nextPoint }
                 val yCorner = !grid.isValid(cornerNeighbors[0]) || grid[cornerNeighbors[0]] != regionChar
                 val xCorner = !grid.isValid(cornerNeighbors[2]) || grid[cornerNeighbors[2]] != regionChar
                 val xyCorner = !grid.isValid(cornerNeighbors[1]) || grid[cornerNeighbors[1]] != regionChar
@@ -119,7 +118,7 @@ class Day12 : DayTask {
 
     override fun task1(input: List<String>): String {
         val grid = Grid(input.map { row -> row.trim().toList() })
-        val alreadyInRegion = mutableSetOf<GridPoint>()
+        val alreadyInRegion = mutableSetOf<Vector>()
         val regions = mutableListOf<Region>()
         for (point in grid) {
             if (point in alreadyInRegion) {
@@ -134,7 +133,7 @@ class Day12 : DayTask {
 
     override fun task2(input: List<String>): String {
         val grid = Grid(input.map { row -> row.trim().toList() })
-        val alreadyInRegion = mutableSetOf<GridPoint>()
+        val alreadyInRegion = mutableSetOf<Vector>()
         val regions = mutableListOf<SideRegion>()
         for (point in grid) {
             if (point in alreadyInRegion) {

@@ -11,10 +11,8 @@ class DequeIterator<out T>(
 ) : Iterator<T> {
     override fun hasNext(): Boolean = deque.isNotEmpty()
 
-    override fun next(): T {
-        return when (direction) {
-            IteratorDirection.FORWARD -> deque.removeFirst()
-            IteratorDirection.BACKWARD -> deque.removeLast()
-        }
+    override fun next(): T = when (direction) {
+        IteratorDirection.FORWARD -> deque.removeFirst()
+        IteratorDirection.BACKWARD -> deque.removeLast()
     }
 }

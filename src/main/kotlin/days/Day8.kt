@@ -1,11 +1,7 @@
 package me.salmonmoses.days
 
-import me.salmonmoses.utils.Colored
-import me.salmonmoses.utils.Grid
-import me.salmonmoses.utils.GridPoint
-import me.salmonmoses.utils.OutputColor
+import me.salmonmoses.utils.Vector
 import org.koin.core.annotation.Single
-import java.awt.Color
 
 @Single
 @Day(8)
@@ -41,8 +37,8 @@ class Day8 : DayTask {
                     "............", "34"
         )
 
-    fun getNodes(input: List<String>): Map<Char, List<GridPoint>> {
-        val nodes = mutableMapOf<Char, MutableList<GridPoint>>()
+    fun getNodes(input: List<String>): Map<Char, List<Vector>> {
+        val nodes = mutableMapOf<Char, MutableList<Vector>>()
         input.indices.forEach { y ->
             input[y].indices.forEach { x ->
                 val frequency = input[y][x]
@@ -50,7 +46,7 @@ class Day8 : DayTask {
                     if (nodes[frequency] == null) {
                         nodes[frequency] = mutableListOf()
                     }
-                    nodes[frequency]!!.add(GridPoint(x, y))
+                    nodes[frequency]!!.add(Vector(x, y))
                 }
             }
         }
@@ -60,7 +56,7 @@ class Day8 : DayTask {
     override fun task1(input: List<String>): String {
         val nodes = getNodes(input)
         val size = input.size
-        val antinodes = mutableSetOf<GridPoint>()
+        val antinodes = mutableSetOf<Vector>()
         nodes.forEach { (_, antennas) ->
             antennas.forEachIndexed { first, firstAntenna ->
                 ((first + 1)..<antennas.size).forEach { second ->
@@ -77,7 +73,7 @@ class Day8 : DayTask {
     override fun task2(input: List<String>): String {
         val nodes = getNodes(input)
         val size = input.size
-        val antinodes = mutableSetOf<GridPoint>()
+        val antinodes = mutableSetOf<Vector>()
         nodes.forEach { (_, antennas) ->
             antennas.forEachIndexed { first, firstAntenna ->
                 ((first + 1)..<antennas.size).forEach { second ->

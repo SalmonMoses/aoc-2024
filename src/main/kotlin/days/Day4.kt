@@ -1,7 +1,7 @@
 package me.salmonmoses.days
 
 import me.salmonmoses.utils.Grid
-import me.salmonmoses.utils.GridPoint
+import me.salmonmoses.utils.Vector
 import org.koin.core.annotation.Single
 
 @Single
@@ -60,8 +60,8 @@ class Day4 : DayTask {
         val grid = Grid(input.map { it.split("").filter(String::isNotBlank) })
         val starts = grid.filter { it.x in 1..<(grid.width - 1) && it.y in 1..<(grid.height - 1) && grid[it] == "A" }
 
-        val rightDiagonal = GridPoint(1, 1)
-        val leftDiagonal = GridPoint(-1, 1)
+        val rightDiagonal = Vector(1, 1)
+        val leftDiagonal = Vector(-1, 1)
         var xmasCount = 0
         for (point in starts) {
             if (((grid[point + rightDiagonal] == "M" && grid[point - rightDiagonal] == "S")

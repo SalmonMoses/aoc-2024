@@ -35,12 +35,12 @@ class Day6 : DayTask {
 
     private fun traceGuard(
         grid: BaseGrid<Boolean>,
-        startingPosition: GridPoint,
-        startingDirection: GridPoint
+        startingPosition: Vector,
+        startingDirection: Vector
     ): Boolean {
         var guardPosition = startingPosition
         var guardDirection = startingDirection
-        val visited = mutableSetOf<Pair<GridPoint, GridPoint>>()
+        val visited = mutableSetOf<Pair<Vector, Vector>>()
         while (grid.isValid(guardPosition)) {
             val positionDirection = Pair(guardPosition, guardDirection)
             if (positionDirection in visited) return false
@@ -56,8 +56,8 @@ class Day6 : DayTask {
     }
 
     override fun task1(input: List<String>): String {
-        var guardPosition = GridPoint(0, 0)
-        var guardDirection = GridPoint(0, -1)
+        var guardPosition = Vector(0, 0)
+        var guardDirection = Vector(0, -1)
         val gridLists = mutableListOf<List<Boolean>>()
         input.indices.forEach { y ->
             val rowList = mutableListOf<Boolean>()
@@ -66,7 +66,7 @@ class Day6 : DayTask {
                     '.' -> rowList.add(true)
                     '#' -> rowList.add(false)
                     '^' -> {
-                        guardPosition = GridPoint(x, y)
+                        guardPosition = Vector(x, y)
                         rowList.add(true)
                     }
                 }
@@ -74,7 +74,7 @@ class Day6 : DayTask {
             gridLists.add(rowList)
         }
         val grid = Grid(gridLists)
-        val visited = mutableSetOf<GridPoint>()
+        val visited = mutableSetOf<Vector>()
         while (grid.isValid(guardPosition)) {
             visited.add(guardPosition)
             val nextPosition = guardPosition + guardDirection
@@ -88,8 +88,8 @@ class Day6 : DayTask {
     }
 
     override fun task2(input: List<String>): String {
-        var guardPosition = GridPoint(0, 0)
-        val guardDirection = GridPoint(0, -1)
+        var guardPosition = Vector(0, 0)
+        val guardDirection = Vector(0, -1)
         val gridLists = mutableListOf<MutableList<Boolean>>()
         input.indices.forEach { y ->
             val rowList = mutableListOf<Boolean>()
@@ -98,7 +98,7 @@ class Day6 : DayTask {
                     '.' -> rowList.add(true)
                     '#' -> rowList.add(false)
                     '^' -> {
-                        guardPosition = GridPoint(x, y)
+                        guardPosition = Vector(x, y)
                         rowList.add(true)
                     }
                 }
@@ -106,7 +106,7 @@ class Day6 : DayTask {
             gridLists.add(rowList)
         }
         val grid = MutableGrid(gridLists)
-        val potentialObstructions = mutableSetOf<GridPoint>()
+        val potentialObstructions = mutableSetOf<Vector>()
         for (potentialObstruction in grid) {
             if (!grid[potentialObstruction]) {
                 continue
