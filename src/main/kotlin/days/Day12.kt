@@ -5,28 +5,6 @@ import me.salmonmoses.utils.Grid
 import me.salmonmoses.utils.Vector
 import org.koin.core.annotation.Single
 
-val neighbors = listOf(
-    Vector(1, 0),
-    Vector(-1, 0),
-    Vector(0, 1),
-    Vector(0, -1)
-)
-
-val corners = listOf(
-    listOf(Vector(0, -1), Vector(1, -1), Vector(1, 0)),
-    listOf(Vector(0, 1), Vector(1, 1), Vector(1, 0)),
-    listOf(Vector(0, -1), Vector(-1, -1), Vector(-1, 0)),
-    listOf(Vector(0, 1), Vector(-1, 1), Vector(-1, 0)),
-)
-
-data class Region(val points: Set<Vector>, val perimeter: Long) {
-    val price = points.size.toLong() * perimeter
-}
-
-data class SideRegion(val points: Set<Vector>, val sides: Long) {
-    val price = points.size.toLong() * sides
-}
-
 @Single
 @Day(12)
 class Day12 : DayTask {
@@ -52,6 +30,28 @@ class Day12 : DayTask {
                     "ABBAAA\n" +
                     "AAAAAA", "368"
         )
+
+    private val neighbors = listOf(
+        Vector(1, 0),
+        Vector(-1, 0),
+        Vector(0, 1),
+        Vector(0, -1)
+    )
+
+    private val corners = listOf(
+        listOf(Vector(0, -1), Vector(1, -1), Vector(1, 0)),
+        listOf(Vector(0, 1), Vector(1, 1), Vector(1, 0)),
+        listOf(Vector(0, -1), Vector(-1, -1), Vector(-1, 0)),
+        listOf(Vector(0, 1), Vector(-1, 1), Vector(-1, 0)),
+    )
+
+    private data class Region(val points: Set<Vector>, val perimeter: Long) {
+        val price = points.size.toLong() * perimeter
+    }
+
+    private data class SideRegion(val points: Set<Vector>, val sides: Long) {
+        val price = points.size.toLong() * sides
+    }
 
     private fun findRegion(grid: Grid<Char>, start: Vector): Region {
         val visited = mutableSetOf<Vector>()

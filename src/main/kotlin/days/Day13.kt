@@ -3,32 +3,6 @@ package me.salmonmoses.days
 import me.salmonmoses.utils.isInteger
 import org.koin.core.annotation.Single
 
-fun solveArcade(
-    ax: Double,
-    ay: Double,
-    bx: Double,
-    by: Double,
-    px: Double,
-    py: Double
-): Double {
-    /**
-     * px = m * ax + n * bx
-     * py = m * ay + n * by
-     * m = (px - n * bx) / ax
-     * py = (px - n * bx) / ax * ay + n * by
-     * py = (ay * px - n * ay * bx) / ax + n * by
-     * ax * py = ay * px - n * ay * bx + n * ax * by
-     * n * ay * bx - n * ax * by = ay * px - ax * py
-     * n (ay * bx - ax * by) = ay * px - ax * py
-     * n = (ay * px - ax * py) / (ay * bx - ax * by)
-     */
-    val dividend = (ay * px - ax * py)
-    val divisor = (ay * bx - ax * by)
-    val n = dividend / divisor
-    val m = (px - n * bx) / ax
-    return if (m.isInteger() && n.isInteger() && m >= 0 && n >= 0) m * 3 + n else 0.0
-}
-
 @Single
 @Day(13)
 class Day13 : DayTask {
@@ -52,6 +26,32 @@ class Day13 : DayTask {
         )
     override val spec2: TaskSpec?
         get() = null
+
+    private fun solveArcade(
+        ax: Double,
+        ay: Double,
+        bx: Double,
+        by: Double,
+        px: Double,
+        py: Double
+    ): Double {
+        /**
+         * px = m * ax + n * bx
+         * py = m * ay + n * by
+         * m = (px - n * bx) / ax
+         * py = (px - n * bx) / ax * ay + n * by
+         * py = (ay * px - n * ay * bx) / ax + n * by
+         * ax * py = ay * px - n * ay * bx + n * ax * by
+         * n * ay * bx - n * ax * by = ay * px - ax * py
+         * n (ay * bx - ax * by) = ay * px - ax * py
+         * n = (ay * px - ax * py) / (ay * bx - ax * by)
+         */
+        val dividend = (ay * px - ax * py)
+        val divisor = (ay * bx - ax * by)
+        val n = dividend / divisor
+        val m = (px - n * bx) / ax
+        return if (m.isInteger() && n.isInteger() && m >= 0 && n >= 0) m * 3 + n else 0.0
+    }
 
     override fun task1(input: List<String>): String {
         val arcadeRegex = Regex(
