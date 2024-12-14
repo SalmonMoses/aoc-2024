@@ -15,7 +15,7 @@ class Day11 : DayTask {
             .map(String::toLong)
             .groupBy { it }
             .mapValues { it.value.size.toLong() }
-        for (step in 0..<steps) {
+        repeat(steps) {
             stones = blink(stones)
         }
         return stones.values.sum()
