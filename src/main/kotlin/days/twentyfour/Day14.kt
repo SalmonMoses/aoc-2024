@@ -1,13 +1,14 @@
-package me.salmonmoses.days
+package me.salmonmoses.days.twentyfour
 
+import me.salmonmoses.days.Day
+import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.Vector
 import org.koin.core.annotation.Single
 import java.awt.Dimension
 import java.awt.image.BufferedImage
 import java.io.*
-import java.math.BigInteger
 import javax.imageio.ImageIO
-import kotlin.math.absoluteValue
 
 @Single
 @Day(14)

@@ -1,5 +1,7 @@
 package me.salmonmoses.utils
 
+import kotlin.math.pow
+
 data class Vector(val x: Int, val y: Int) {
     operator fun plus(delta: Vector): Vector {
         return Vector(x + delta.x, y + delta.y)
@@ -23,6 +25,10 @@ data class Vector(val x: Int, val y: Int) {
 
     fun rotateClockwise(): Vector {
         return Vector(-y, x)
+    }
+
+    fun length(): Double {
+        return x.toDouble().pow(2.0) + y.toDouble().pow(2.0)
     }
 }
 

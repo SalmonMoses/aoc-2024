@@ -17,27 +17,31 @@ class TaskRunner(tasks: List<DayTask>, val inputService: InputService) {
     private val days: Map<Int, DayTask> = tasks.map { task ->
         task::class.findAnnotation<Day>()?.let {
             val day = it.day
-            return@map day to task
+            val year = it.year
+            return@map (year * 100 + day) to task
         }
     }.filterNotNull().toMap()
 
-    fun runDay(day: Int) {
-        if (!inputService.checkDayInput(day)) {
+    fun runDay(day: Int, year: Int) {
+        if (!inputService.checkDayInput(day, year)) {
             println(Colored.foreground("Downloading input for day $day...", OutputColor.BLUE))
-            inputService.downloadDayInput(day)
+            inputService.downloadDayInput(day, year)
             println(Colored.foreground("Downloaded input", OutputColor.BLUE))
         } else {
             println(Colored.foreground("Input for day $day already exists, skipping downloading it", OutputColor.BLUE))
         }
 
-        days[day]?.let {
-            checkSpec(it, DayTask::task1, it.spec1, "task 1")
+        val dayIndex = year * 100 + day
+        days[dayIndex]?.let {
+            it.spec1?.let { spec ->
+                checkSpec(it, DayTask::task1, spec, "task 1")
+            }
 
             it.spec2?.let { spec ->
                 checkSpec(it, DayTask::task2, spec, "task 2")
             }
 
-            val input = inputService.getDayInput(day)
+            val input = inputService.getDayInput(day, year)
             check(input.isNotEmpty(), { "Input is empty!" })
             runTask(it, input, DayTask::task1, "task 1")
             runTask(it, input, DayTask::task2, "task 2")
@@ -47,14 +51,16 @@ class TaskRunner(tasks: List<DayTask>, val inputService: InputService) {
     }
 
     fun runToday() {
-        val today = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-        runDay(today)
+        val calendar = Calendar.getInstance()
+        val today = calendar.get(Calendar.DAY_OF_MONTH)
+        val year = calendar.get(Calendar.YEAR)
+        runDay(today, year)
     }
 
-    fun runAll(excluded: Set<Int> = setOf()) {
+    fun runAll(year: Int, excluded: Set<Int> = setOf()) {
         (1..25).filter { it !in excluded }.forEach { day ->
             println(Colored.backgroundForeground("   DAY $day   ", OutputColor.YELLOW, OutputColor.BLACK))
-            runDay(day)
+            runDay(day, year)
             println()
         }
     }

@@ -1,5 +1,8 @@
-package me.salmonmoses.days
+package me.salmonmoses.days.twentyfour
 
+import me.salmonmoses.days.Day
+import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.Grid
 import me.salmonmoses.utils.Vector
 import org.koin.core.annotation.Single

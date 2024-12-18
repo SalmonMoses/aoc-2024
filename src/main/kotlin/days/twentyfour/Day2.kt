@@ -1,7 +1,8 @@
-package me.salmonmoses.days
+package me.salmonmoses.days.twentyfour
 
-import me.salmonmoses.utils.Colored
-import me.salmonmoses.utils.OutputColor
+import me.salmonmoses.days.Day
+import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.TaskSpec
 import org.koin.core.annotation.Single
 import kotlin.math.absoluteValue
 

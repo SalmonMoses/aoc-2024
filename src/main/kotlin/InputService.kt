@@ -8,11 +8,11 @@ import java.io.File
 
 @Single
 class InputService(val httpClient: OkHttpClient, @Property("session") val session: String) {
-    fun checkDayInput(day: Int): Boolean = File("input/day$day.txt").exists()
+    fun checkDayInput(day: Int, year: Int): Boolean = File("input/$year/day$day.txt").exists()
 
-    fun downloadDayInput(day: Int) {
-        val url = "https://adventofcode.com/2024/day/$day/input"
-        val outputFile = "input/day${day}.txt"
+    fun downloadDayInput(day: Int, year: Int) {
+        val url = "https://adventofcode.com/$year/day/$day/input"
+        val outputFile = "input/$year/day${day}.txt"
         val request = Request.Builder()
             .url(url)
             .header("Cookie", "session=$session")
@@ -24,6 +24,6 @@ class InputService(val httpClient: OkHttpClient, @Property("session") val sessio
             }
     }
 
-    fun getDayInput(day: Int): List<String> = File("input/", "day$day.txt").readLines()
+    fun getDayInput(day: Int, year: Int): List<String> = File("input/$year", "day$day.txt").readLines()
 
 }

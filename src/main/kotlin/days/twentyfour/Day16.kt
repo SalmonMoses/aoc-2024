@@ -1,0 +1,156 @@
+package me.salmonmoses.days.twentyfour
+
+import me.salmonmoses.days.Day
+import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.TaskSpec
+import me.salmonmoses.utils.DequeIterator
+import me.salmonmoses.utils.Grid
+import me.salmonmoses.utils.Vector
+import org.koin.core.annotation.Single
+
+@Single
+@Day(16)
+class Day16 : DayTask {
+    override val spec1: TaskSpec
+        get() = TaskSpec(
+            "###############\n" +
+                    "#.......#....E#\n" +
+                    "#.#.###.#.###.#\n" +
+                    "#.....#.#...#.#\n" +
+                    "#.###.#####.#.#\n" +
+                    "#.#.#.......#.#\n" +
+                    "#.#.#####.###.#\n" +
+                    "#...........#.#\n" +
+                    "###.#.#####.#.#\n" +
+                    "#...#.....#.#.#\n" +
+                    "#.#.#.###.#.#.#\n" +
+                    "#.....#...#.#.#\n" +
+                    "#.###.#.#.#.#.#\n" +
+                    "#S..#.....#...#\n" +
+                    "###############", "7036"
+        )
+    override val spec2: TaskSpec?
+        get() = TaskSpec(
+            "###############\n" +
+                    "#.......#....E#\n" +
+                    "#.#.###.#.###.#\n" +
+                    "#.....#.#...#.#\n" +
+                    "#.###.#####.#.#\n" +
+                    "#.#.#.......#.#\n" +
+                    "#.#.#####.###.#\n" +
+                    "#...........#.#\n" +
+                    "###.#.#####.#.#\n" +
+                    "#...#.....#.#.#\n" +
+                    "#.#.#.###.#.#.#\n" +
+                    "#.....#...#.#.#\n" +
+                    "#.###.#.#.#.#.#\n" +
+                    "#S..#.....#...#\n" +
+                    "###############", "45"
+        )
+
+    private data class DijkstraInfo(val cameFrom: Vector?, val direction: Vector, val score: Int)
+
+    override fun task1(input: List<String>): String {
+        var start = Vector(0, 0)
+        var end = Vector(0, 0)
+        val grid = Grid(input.mapIndexed { y, row ->
+            row.mapIndexed { x, cell ->
+                when (cell) {
+                    'S' -> {
+                        start = Vector(x, y)
+                        false
+                    }
+
+                    'E' -> {
+                        end = Vector(x, y)
+                        false
+                    }
+
+                    '#' -> true
+
+                    else -> false
+                }
+            }
+        })
+        val infos = mutableMapOf(
+            start to DijkstraInfo(null, Vector(1, 0), 0),
+        )
+        val frontier = ArrayDeque<Vector>()
+        frontier.add(start)
+        for (current in DequeIterator(frontier)) {
+            if (current == end) {
+                continue
+            }
+
+            val currentInfo = infos[current]!!
+
+            grid.getNeighbors(current).forEach { neighbor ->
+                if (!grid[neighbor]) {
+                    val direction = neighbor - current
+                    val newScore =
+                        currentInfo.score + (if (direction == currentInfo.direction) 1 else 1001)
+                    if (neighbor !in infos || newScore < infos[neighbor]!!.score) {
+                        infos[neighbor] = DijkstraInfo(current, direction, newScore)
+                        frontier.add(neighbor)
+                    }
+                }
+            }
+        }
+        return infos[end]!!.score.toString()
+    }
+
+    override fun task2(input: List<String>): String {
+        var start = Vector(0, 0)
+        var end = Vector(0, 0)
+        val grid = Grid(input.mapIndexed { y, row ->
+            row.mapIndexed { x, cell ->
+                when (cell) {
+                    'S' -> {
+                        start = Vector(x, y)
+                        false
+                    }
+
+                    'E' -> {
+                        end = Vector(x, y)
+                        false
+                    }
+
+                    '#' -> true
+
+                    else -> false
+                }
+            }
+        })
+        val infos = mutableMapOf(
+            start to DijkstraInfo(null, Vector(1, 0), 0),
+        )
+        val frontier = ArrayDeque<Vector>()
+        frontier.add(start)
+        for (current in DequeIterator(frontier)) {
+            if (current == end) {
+                continue
+            }
+
+            val currentInfo = infos[current]!!
+
+            grid.getNeighbors(current).forEach { neighbor ->
+                if (!grid[neighbor]) {
+                    val direction = neighbor - current
+                    val newScore =
+                        currentInfo.score + (if (direction == currentInfo.direction) 1 else 1001)
+                    if (neighbor !in infos || newScore < infos[neighbor]!!.score) {
+                        infos[neighbor] = DijkstraInfo(current, direction, newScore)
+                        frontier.add(neighbor)
+                    }
+                }
+            }
+        }
+        val path = mutableSetOf<Vector>()
+        var currentNode: Vector? = end
+        while (currentNode != null) {
+            path.add(currentNode)
+            currentNode = infos[currentNode]?.cameFrom
+        }
+        return path.size.toString()
+    }
+}

@@ -1,10 +1,13 @@
-package me.salmonmoses.days
+package me.salmonmoses.days.twentyfour
 
+import me.salmonmoses.days.Day
+import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.TaskSpec
 import org.koin.core.annotation.Single
 
 @Single
-@Day(0)
-class Day15 : DayTask {
+@Day(19)
+class Day19 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec("", "")
     override val spec2: TaskSpec?
