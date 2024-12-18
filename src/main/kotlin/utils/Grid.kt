@@ -1,5 +1,7 @@
 package me.salmonmoses.utils
 
+import kotlin.math.absoluteValue
+import kotlin.math.max
 import kotlin.math.pow
 
 data class Vector(val x: Int, val y: Int) {
@@ -27,8 +29,12 @@ data class Vector(val x: Int, val y: Int) {
         return Vector(-y, x)
     }
 
-    fun length(): Double {
+    fun sqrtLength(): Double {
         return x.toDouble().pow(2.0) + y.toDouble().pow(2.0)
+    }
+
+    fun manhattan(other: Vector): Int {
+        return (x - other.x).absoluteValue + (y - other.y).absoluteValue
     }
 }
 

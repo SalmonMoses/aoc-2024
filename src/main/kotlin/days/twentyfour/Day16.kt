@@ -7,6 +7,8 @@ import me.salmonmoses.utils.DequeIterator
 import me.salmonmoses.utils.Grid
 import me.salmonmoses.utils.Vector
 import org.koin.core.annotation.Single
+import java.util.*
+import kotlin.collections.ArrayDeque
 
 @Single
 @Day(16)
@@ -48,7 +50,7 @@ class Day16 : DayTask {
                     "###############", "45"
         )
 
-    private data class DijkstraInfo(val cameFrom: Vector?, val direction: Vector, val score: Int)
+    private data class PathfindingInfo(val cameFrom: Vector?, val direction: Vector, val score: Int)
 
     override fun task1(input: List<String>): String {
         var start = Vector(0, 0)
@@ -73,11 +75,12 @@ class Day16 : DayTask {
             }
         })
         val infos = mutableMapOf(
-            start to DijkstraInfo(null, Vector(1, 0), 0),
+            start to PathfindingInfo(null, Vector(1, 0), 0),
         )
-        val frontier = ArrayDeque<Vector>()
-        frontier.add(start)
-        for (current in DequeIterator(frontier)) {
+        val frontier = PriorityQueue<Pair<Vector, Int>> { first, second -> first.second - second.second }
+        frontier.offer(start to 0)
+        while (frontier.isNotEmpty()) {
+            val current = frontier.poll().first
             if (current == end) {
                 continue
             }
@@ -90,8 +93,8 @@ class Day16 : DayTask {
                     val newScore =
                         currentInfo.score + (if (direction == currentInfo.direction) 1 else 1001)
                     if (neighbor !in infos || newScore < infos[neighbor]!!.score) {
-                        infos[neighbor] = DijkstraInfo(current, direction, newScore)
-                        frontier.add(neighbor)
+                        infos[neighbor] = PathfindingInfo(current, direction, newScore)
+                        frontier.add(neighbor to end.manhattan(neighbor))
                     }
                 }
             }
@@ -122,11 +125,12 @@ class Day16 : DayTask {
             }
         })
         val infos = mutableMapOf(
-            start to DijkstraInfo(null, Vector(1, 0), 0),
+            start to PathfindingInfo(null, Vector(1, 0), 0),
         )
-        val frontier = ArrayDeque<Vector>()
-        frontier.add(start)
-        for (current in DequeIterator(frontier)) {
+        val frontier = PriorityQueue<Pair<Vector, Int>> { first, second -> first.second - second.second }
+        frontier.offer(start to 0)
+        while (frontier.isNotEmpty()) {
+            val current = frontier.poll().first
             if (current == end) {
                 continue
             }
@@ -139,8 +143,8 @@ class Day16 : DayTask {
                     val newScore =
                         currentInfo.score + (if (direction == currentInfo.direction) 1 else 1001)
                     if (neighbor !in infos || newScore < infos[neighbor]!!.score) {
-                        infos[neighbor] = DijkstraInfo(current, direction, newScore)
-                        frontier.add(neighbor)
+                        infos[neighbor] = PathfindingInfo(current, direction, newScore)
+                        frontier.add(neighbor to end.manhattan(neighbor))
                     }
                 }
             }

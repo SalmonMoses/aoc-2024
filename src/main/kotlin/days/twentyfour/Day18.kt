@@ -6,7 +6,6 @@ import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.*
 import org.koin.core.annotation.Single
 import java.util.PriorityQueue
-import kotlin.collections.ArrayDeque
 
 @Single
 @Day(18)
@@ -70,15 +69,16 @@ class Day18 : DayTask {
                     "2,0", "6,1"
         )
 
-    private data class DijkstraInfo(val cameFrom: Vector?, val score: Int)
+    private data class PathfindingInfo(val cameFrom: Vector?, val score: Int)
 
-    private fun findPath(grid: VirtualGrid<Boolean>, start: Vector, end: Vector): Map<Vector, DijkstraInfo> {
+    private fun findPath(grid: VirtualGrid<Boolean>, start: Vector, end: Vector): Map<Vector, PathfindingInfo> {
         val infos = mutableMapOf(
-            start to DijkstraInfo(null, 0),
+            start to PathfindingInfo(null, 0),
         )
-        val frontier = ArrayDeque<Vector>()
-        frontier.add(start)
-        for (current in DequeIterator(frontier)) {
+        val frontier = PriorityQueue<Pair<Vector, Int>> { first, second -> (first.second - second.second) }
+        frontier.offer(Pair(start, 0))
+        while (frontier.isNotEmpty()) {
+            val current = frontier.poll().first
             if (current == end) {
                 break
             }
@@ -89,8 +89,8 @@ class Day18 : DayTask {
                 if (neighbor !in grid) {
                     val newScore = currentInfo.score + 1
                     if (neighbor !in infos || newScore < infos[neighbor]!!.score) {
-                        infos[neighbor] = DijkstraInfo(current, newScore)
-                        frontier.add(neighbor)
+                        infos[neighbor] = PathfindingInfo(current, newScore)
+                        frontier.offer(Pair(neighbor, end.manhattan(neighbor)))
                     }
                 }
             }
