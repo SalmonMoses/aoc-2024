@@ -98,11 +98,18 @@ abstract class BaseGrid<T> : Iterable<Vector> {
         (0..<height).cartesianProduct(0..<width).map { (x, y) -> Vector(x, y) }.iterator()
 }
 
-class Grid<T>(private val grid: List<List<T>>) : BaseGrid<T>() {
-    override operator fun get(x: Int, y: Int): T = grid[y][x]
+open class Grid<T>(final override val width: Int, final override val height: Int, init: (Vector) -> T) : BaseGrid<T>() {
+    protected val grid = ArrayList<T>(width * height)
 
-    override val height = grid.size
-    override val width = grid[0].size
+    init {
+        (0..<height).forEach { y ->
+            (0..<width).forEach { x -> grid.add(init(Vector(x, y))) }
+        }
+    }
+
+    override operator fun get(x: Int, y: Int): T = grid[y * width + x]
+
+    constructor(gridInit: List<List<T>>) : this(gridInit.size, gridInit[0].size, { gridInit[it.y][it.x] })
 
     fun getNeighborValues(x: Int, y: Int): List<T> = getNeighbors(x, y).map { this[it.x, it.y] }
     fun getNeighborValues(point: Vector): List<T> = getNeighbors(point).map { this[it.x, it.y] }
@@ -114,27 +121,16 @@ class Grid<T>(private val grid: List<List<T>>) : BaseGrid<T>() {
         getNeighborsDiagonal(point).map { this[it.x, it.y] }
 }
 
-class MutableGrid<T>(private val grid: MutableList<MutableList<T>>) : BaseGrid<T>() {
-    override operator fun get(x: Int, y: Int): T = grid[y][x]
+class MutableGrid<T>(width: Int, height: Int, init: (Vector) -> T) : Grid<T>(width, height, init) {
+    constructor(gridInit: List<List<T>>) : this(gridInit.size, gridInit[0].size, { gridInit[it.y][it.x] })
+
     operator fun set(x: Int, y: Int, value: T) {
-        grid[y][x] = value
+        grid[y * width + x] = value
     }
 
     operator fun set(point: Vector, value: T) {
-        grid[point.y][point.x] = value
+        grid[point.y * width + point.x] = value
     }
-
-    override val height = grid.size
-    override val width = grid[0].size
-
-    fun getNeighborValues(x: Int, y: Int): List<T> = getNeighbors(x, y).map { this[it.x, it.y] }
-    fun getNeighborValues(point: Vector): List<T> = getNeighbors(point).map { this[it.x, it.y] }
-
-    fun getNeighborValuesDiagonal(x: Int, y: Int): List<T> =
-        getNeighborsDiagonal(x, y).map { this[it.x, it.y] }
-
-    fun getNeighborValuesDiagonal(point: Vector): List<T> =
-        getNeighborsDiagonal(point).map { this[it.x, it.y] }
 }
 
 class VirtualGrid<T>(

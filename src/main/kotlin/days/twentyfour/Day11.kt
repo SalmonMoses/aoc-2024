@@ -29,16 +29,16 @@ class Day11 : DayTask {
         stones.forEach { (stone, amount) ->
             val digits = stone.toString()
             if (stone == 0L) {
-                newStones[1L] = newStones[1L]?.plus(amount) ?: amount
+                newStones.merge(1L, amount, Long::plus)
             } else if (digits.length % 2 == 0) {
                 val sizeMiddle = digits.length / 2
                 val left = digits.substring(0, sizeMiddle).toLong()
                 val right = digits.substring(sizeMiddle).toLong()
-                newStones[left] = newStones[left]?.plus(amount) ?: amount
-                newStones[right] = newStones[right]?.plus(amount) ?: amount
+                newStones.merge(left, amount, Long::plus)
+                newStones.merge(right, amount, Long::plus)
             } else {
                 val multipliedStone = stone * 2024
-                newStones[multipliedStone] = newStones[multipliedStone]?.plus(amount) ?: amount
+                newStones.merge(multipliedStone, amount, Long::plus)
             }
         }
         return newStones

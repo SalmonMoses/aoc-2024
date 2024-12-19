@@ -5,6 +5,7 @@ import me.salmonmoses.days.DayTask
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.*
 import org.koin.core.annotation.Single
+import java.nio.file.Path
 import java.util.PriorityQueue
 
 @Single
@@ -71,15 +72,12 @@ class Day18 : DayTask {
 
     private data class PathfindingInfo(val cameFrom: Vector?, val score: Int)
 
-    private fun makeGrid(width: Int, height: Int, bytes: Set<Vector>): Grid<Boolean> = Grid((0..<height).map { y ->
-        (0..<width).map { x ->
-            Vector(x, y) !in bytes
-        }
-    })
+    private fun makeGrid(width: Int, height: Int, bytes: Set<Vector>): Grid<Boolean> =
+        Grid(width, height) { it !in bytes }
 
-    private fun findPath(grid: BaseGrid<Boolean>, start: Vector, end: Vector): Array<PathfindingInfo> {
-        val infos = Array(grid.width * grid.height) { PathfindingInfo(null, Int.MAX_VALUE) }
-        infos[0] = PathfindingInfo(null, 0)
+    private fun findPath(grid: BaseGrid<Boolean>, start: Vector, end: Vector): MutableGrid<PathfindingInfo> {
+        val infos = MutableGrid(grid.width, grid.height) { PathfindingInfo(null, Int.MAX_VALUE) }
+        infos[0, 0] = PathfindingInfo(null, 0)
         val frontier = ArrayDeque<Vector>()
         frontier.add(start)
         while (frontier.isNotEmpty()) {
@@ -88,13 +86,13 @@ class Day18 : DayTask {
                 break
             }
 
-            val currentInfo = infos[current.y * grid.width + current.x]
+            val currentInfo = infos[current]
 
             grid.getNeighbors(current).forEach { neighbor ->
                 if (grid[neighbor]) {
                     val newScore = currentInfo.score + 1
-                    if (newScore < infos[neighbor.y * grid.width + neighbor.x].score) {
-                        infos[neighbor.y * grid.width + neighbor.x] = PathfindingInfo(current, newScore)
+                    if (newScore < infos[neighbor].score) {
+                        infos[neighbor] = PathfindingInfo(current, newScore)
                         frontier.add(neighbor)
                     }
                 }
@@ -109,7 +107,7 @@ class Day18 : DayTask {
         var currentNode: Vector? = end
         while (currentNode != null) {
             path.add(currentNode)
-            currentNode = infos[currentNode.y * grid.width + currentNode.x].cameFrom
+            currentNode = infos[currentNode].cameFrom
         }
         return path
     }
@@ -128,7 +126,7 @@ class Day18 : DayTask {
         val start = Vector(0, 0)
         val end = Vector(width - 1, height - 1)
         val path = findPath(grid, start, end)
-        return path[end.y * width + end.x].score.toString()
+        return path[end].score.toString()
     }
 
     override fun task2(input: List<String>): String {

@@ -61,22 +61,18 @@ class Day6 : DayTask {
     override fun task1(input: List<String>): String {
         var guardPosition = Vector(0, 0)
         var guardDirection = Vector(0, -1)
-        val gridLists = mutableListOf<List<Boolean>>()
-        input.indices.forEach { y ->
-            val rowList = mutableListOf<Boolean>()
-            input[y].trim().indices.forEach { x ->
-                when (input[y][x]) {
-                    '.' -> rowList.add(true)
-                    '#' -> rowList.add(false)
-                    '^' -> {
-                        guardPosition = Vector(x, y)
-                        rowList.add(true)
-                    }
+        val grid = MutableGrid(input.size, input[0].trim().length) {
+            when (input[it.y][it.x]) {
+                '.' -> true
+                '#' -> false
+                '^' -> {
+                    guardPosition = it
+                    true
                 }
+
+                else -> true
             }
-            gridLists.add(rowList)
         }
-        val grid = Grid(gridLists)
         val visited = mutableSetOf<Vector>()
         while (grid.isValid(guardPosition)) {
             visited.add(guardPosition)
@@ -93,22 +89,18 @@ class Day6 : DayTask {
     override fun task2(input: List<String>): String {
         var guardPosition = Vector(0, 0)
         val guardDirection = Vector(0, -1)
-        val gridLists = mutableListOf<MutableList<Boolean>>()
-        input.indices.forEach { y ->
-            val rowList = mutableListOf<Boolean>()
-            input[y].trim().indices.forEach { x ->
-                when (input[y][x]) {
-                    '.' -> rowList.add(true)
-                    '#' -> rowList.add(false)
-                    '^' -> {
-                        guardPosition = Vector(x, y)
-                        rowList.add(true)
-                    }
+        val grid = MutableGrid(input.size, input[0].trim().length) {
+            when (input[it.y][it.x]) {
+                '.' -> true
+                '#' -> false
+                '^' -> {
+                    guardPosition = it
+                    true
                 }
+
+                else -> true
             }
-            gridLists.add(rowList)
         }
-        val grid = MutableGrid(gridLists)
         val potentialObstructions = mutableSetOf<Vector>()
         for (potentialObstruction in grid) {
             if (!grid[potentialObstruction]) {

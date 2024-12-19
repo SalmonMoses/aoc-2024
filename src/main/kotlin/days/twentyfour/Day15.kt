@@ -14,7 +14,7 @@ class MapEntity(
 )
 
 class RobotMap(val width: Int, val height: Int) {
-    val grid = MutableGrid<MapEntity?>(MutableList(height) { _ -> MutableList(width) { _ -> null } })
+    val grid = MutableGrid<MapEntity?>(width, height) { null }
 
     fun placeEntity(entity: MapEntity) {
         (0..<entity.size.y).forEach { dy ->
