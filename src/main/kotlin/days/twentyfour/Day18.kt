@@ -71,26 +71,31 @@ class Day18 : DayTask {
 
     private data class PathfindingInfo(val cameFrom: Vector?, val score: Int)
 
-    private fun findPath(grid: VirtualGrid<Boolean>, start: Vector, end: Vector): Map<Vector, PathfindingInfo> {
-        val infos = mutableMapOf(
-            start to PathfindingInfo(null, 0),
-        )
-        val frontier = PriorityQueue<Pair<Vector, Int>> { first, second -> (first.second - second.second) }
-        frontier.offer(Pair(start, 0))
+    private fun makeGrid(width: Int, height: Int, bytes: Set<Vector>): Grid<Boolean> = Grid((0..<height).map { y ->
+        (0..<width).map { x ->
+            Vector(x, y) !in bytes
+        }
+    })
+
+    private fun findPath(grid: BaseGrid<Boolean>, start: Vector, end: Vector): Array<PathfindingInfo> {
+        val infos = Array(grid.width * grid.height) { PathfindingInfo(null, Int.MAX_VALUE) }
+        infos[0] = PathfindingInfo(null, 0)
+        val frontier = ArrayDeque<Vector>()
+        frontier.add(start)
         while (frontier.isNotEmpty()) {
-            val current = frontier.poll().first
+            val current = frontier.removeFirst()
             if (current == end) {
                 break
             }
 
-            val currentInfo = infos[current]!!
+            val currentInfo = infos[current.y * grid.width + current.x]
 
             grid.getNeighbors(current).forEach { neighbor ->
-                if (neighbor !in grid) {
+                if (grid[neighbor]) {
                     val newScore = currentInfo.score + 1
-                    if (neighbor !in infos || newScore < infos[neighbor]!!.score) {
-                        infos[neighbor] = PathfindingInfo(current, newScore)
-                        frontier.offer(Pair(neighbor, end.manhattan(neighbor)))
+                    if (newScore < infos[neighbor.y * grid.width + neighbor.x].score) {
+                        infos[neighbor.y * grid.width + neighbor.x] = PathfindingInfo(current, newScore)
+                        frontier.add(neighbor)
                     }
                 }
             }
@@ -98,35 +103,32 @@ class Day18 : DayTask {
         return infos
     }
 
-    private fun backtrackPath(grid: VirtualGrid<Boolean>, start: Vector, end: Vector): Set<Vector> {
+    private fun backtrackPath(grid: BaseGrid<Boolean>, start: Vector, end: Vector): Set<Vector> {
         val infos = findPath(grid, start, end)
-        if (end !in infos) {
-            return emptySet()
-        }
         val path = mutableSetOf<Vector>()
         var currentNode: Vector? = end
         while (currentNode != null) {
             path.add(currentNode)
-            currentNode = infos[currentNode]?.cameFrom
+            currentNode = infos[currentNode.y * grid.width + currentNode.x].cameFrom
         }
         return path
     }
 
     override fun task1(input: List<String>): String {
         val time = input[0].toInt()
-        val bytes = input.drop(1).take(time).associate {
+        val bytes = input.drop(1).take(time).map {
             val pair = it.trim().split(",")
             val x = pair[0].toInt()
             val y = pair[1].toInt()
-            Vector(x, y) to true
-        }
-        val width = (bytes.keys.maxOfOrNull(Vector::x) ?: 0)
-        val height = (bytes.keys.maxOfOrNull(Vector::y) ?: 0)
-        val grid = VirtualGrid(0, width, 0, height, bytes)
+            Vector(x, y)
+        }.toSet()
+        val width = (bytes.maxOfOrNull(Vector::x) ?: 0) + 1
+        val height = (bytes.maxOfOrNull(Vector::y) ?: 0) + 1
+        val grid = makeGrid(width, height, bytes)
         val start = Vector(0, 0)
-        val end = Vector(width, height)
+        val end = Vector(width - 1, height - 1)
         val path = findPath(grid, start, end)
-        return path[end]?.score?.toString() ?: ""
+        return path[end.y * width + end.x].score.toString()
     }
 
     override fun task2(input: List<String>): String {
@@ -137,17 +139,17 @@ class Day18 : DayTask {
             val y = pair[1].toInt()
             Vector(x, y)
         }
-        val width = (bytes.maxOfOrNull(Vector::x) ?: 0)
-        val height = (bytes.maxOfOrNull(Vector::y) ?: 0)
+        val width = (bytes.maxOfOrNull(Vector::x) ?: 0) + 1
+        val height = (bytes.maxOfOrNull(Vector::y) ?: 0) + 1
         val start = Vector(0, 0)
-        val end = Vector(width, height)
-        var grid = VirtualGrid(0, width, 0, height, bytes.take(initialTime + 1).associateWith { true })
+        val end = Vector(width - 1, height - 1)
+        var grid = makeGrid(width, height, bytes.take(initialTime + 1).toSet())
         var path = backtrackPath(grid, start, end)
         for (t in (initialTime + 1)..<bytes.size) {
             if (bytes[t] in path) {
-                grid = VirtualGrid(0, width, 0, height, bytes.take(t + 1).associateWith { true })
+                grid = makeGrid(width, height, bytes.take(t + 1).toSet())
                 path = backtrackPath(grid, start, end)
-                if (end !in path) {
+                if (start !in path || end !in path) {
                     return "${bytes[t].x},${bytes[t].y}"
                 }
             }
