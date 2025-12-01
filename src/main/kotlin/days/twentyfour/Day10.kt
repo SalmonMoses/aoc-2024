@@ -9,7 +9,7 @@ import me.salmonmoses.utils.Vector
 import org.koin.core.annotation.Single
 
 @Single
-@Day(10)
+@Day(10, 2024)
 class Day10 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(

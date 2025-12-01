@@ -109,7 +109,7 @@ class RobotMap(val width: Int, val height: Int) {
 }
 
 @Single
-@Day(15)
+@Day(15, 2024)
 class Day15 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(

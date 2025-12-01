@@ -7,7 +7,7 @@ import org.koin.core.annotation.Single
 import kotlin.math.abs
 
 @Single
-@Day(1)
+@Day(1, 2024)
 class Day1 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(

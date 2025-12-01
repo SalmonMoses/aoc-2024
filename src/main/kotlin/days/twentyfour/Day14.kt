@@ -11,7 +11,7 @@ import java.io.*
 import javax.imageio.ImageIO
 
 @Single
-@Day(14)
+@Day(14, 2024)
 class Day14 : DayTask {
     private data class Robot(var position: Vector, val velocity: Vector)
 

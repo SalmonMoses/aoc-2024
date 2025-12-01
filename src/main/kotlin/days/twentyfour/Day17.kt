@@ -65,7 +65,7 @@ object Disassembler {
 }
 
 @Single
-@Day(17)
+@Day(17, 2024)
 class Day17 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(

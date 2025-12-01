@@ -6,7 +6,7 @@ import me.salmonmoses.days.TaskSpec
 import org.koin.core.annotation.Single
 
 @Single
-@Day(9)
+@Day(9, 2024)
 class Day9 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec("2333133121414131402", "1928")

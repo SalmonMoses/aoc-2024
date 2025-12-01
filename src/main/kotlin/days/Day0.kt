@@ -3,7 +3,7 @@ package me.salmonmoses.days
 import org.koin.core.annotation.Single
 
 @Single
-@Day(0)
+@Day(0, 0)
 class Day0 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec("", "")

@@ -11,7 +11,7 @@ import java.util.*
 import kotlin.collections.ArrayDeque
 
 @Single
-@Day(16)
+@Day(16, 2024)
 class Day16 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(

@@ -9,7 +9,7 @@ import java.nio.file.Path
 import java.util.PriorityQueue
 
 @Single
-@Day(18)
+@Day(18, 2024)
 class Day18 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(

@@ -8,7 +8,7 @@ import org.koin.core.annotation.Single
 typealias Equation = Pair<Long, List<Long>>
 
 @Single
-@Day(7)
+@Day(7, 2024)
 class Day7 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(

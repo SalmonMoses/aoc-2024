@@ -6,7 +6,7 @@ import me.salmonmoses.days.TaskSpec
 import org.koin.core.annotation.Single
 
 @Single
-@Day(3)
+@Day(3, 2024)
 class Day3 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec("xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))", "161")
