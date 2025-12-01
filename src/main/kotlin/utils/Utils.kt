@@ -9,6 +9,14 @@ fun <S, T> Iterable<S>.cartesianProduct(other: Iterable<T>) = this.flatMap { thi
     }
 }
 
+fun <S, T> Iterable<S>.steppedReduce(initial: T, operation: (T, S) -> T): Iterable<T> {
+    var current = initial
+    return this.map {
+        current = operation(current, it)
+        current
+    }
+}
+
 fun Double.isInteger(): Boolean = (this - roundToLong()).absoluteValue < 0.000001
 
 fun Int.factorial(): Long {
