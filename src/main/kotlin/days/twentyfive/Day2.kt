@@ -3,13 +3,10 @@ package me.salmonmoses.days.twentyfive
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
 import me.salmonmoses.days.TaskSpec
-import okhttp3.internal.concurrent.Task
 import org.koin.core.annotation.Single
-import java.lang.Math.pow
 import kotlin.math.ceil
 import kotlin.math.log10
 import kotlin.math.pow
-import kotlin.text.split
 
 @Single
 @Day(2, 2025)
@@ -27,11 +24,12 @@ class Day2 : DayTask {
                     "824824821-824824827,2121212118-2121212124", "4174379265"
         )
 
-    private fun parseInput(input: String): List<LongRange> = input.split(",")
+    private fun parseInput(input: String): List<Long> = input.split(",")
         .map { it.split("-") }
         .map { it[0].toLong()..it[1].toLong() }
+        .flatten()
 
-    private fun checkId(id: Long): Boolean {
+    private fun checkId1(id: Long): Boolean {
         val digitsNumber = ceil(log10(id.toDouble())).toInt()
         if (digitsNumber % 2 == 1) {
             return true
@@ -41,18 +39,30 @@ class Day2 : DayTask {
         return (id / middle) != (id % middle)
     }
 
-    override fun task1(input: List<String>): String {
-        val ranges = parseInput(input[0])
-        return ranges.flatMap {
-            it.map {
-                Pair(it, checkId(it))
+    private fun checkId2(id: Long): Boolean {
+        val digitsNumber = ceil(log10(id.toDouble())).toInt()
+        val stringId = id.toString()
+        val lenghtsToCheck = ((digitsNumber / 2) downTo 1)
+        for (i in lenghtsToCheck) {
+            if (digitsNumber % i > 0) {
+                continue
             }
-        }.filter { !it.second }
-            .sumOf { it.first }.toString()
+            val windows = stringId.windowed(i, i)
+            val isInvalid = windows.drop(1)
+                .fold(true) { acc, string -> acc && string == windows[0] }
+            if (isInvalid) {
+                return false
+            }
+        }
+        return true
     }
 
-    override fun task2(input: List<String>): String {
-        val ranges = parseInput(input[0])
-        return ""
-    }
+    fun task(input: String, idChecker: (Long) -> Boolean): String =
+        parseInput(input)
+            .map { id -> Pair(id, idChecker(id)) }
+            .filter { !it.second }
+            .sumOf { it.first }.toString()
+
+    override fun task1(input: List<String>): String = task(input[0], this::checkId1)
+    override fun task2(input: List<String>): String = task(input[0], this::checkId2)
 }
