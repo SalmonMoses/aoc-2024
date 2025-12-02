@@ -18,9 +18,6 @@ java {
 dependencies {
     testImplementation(kotlin("test"))
 
-    val koin_version = "4.2.0"
-    val koin_annotations_version = "2.3.2"
-
     // Koin
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)

@@ -133,7 +133,7 @@ class MutableGrid<T>(width: Int, height: Int, init: (Vector) -> T) : Grid<T>(wid
     }
 }
 
-class VirtualGrid<T>(
+open class VirtualGrid<T>(
     private val minWidth: Int,
     private val maxWidth: Int,
     private val minHeight: Int,
@@ -150,4 +150,28 @@ class VirtualGrid<T>(
     override fun isValid(x: Int, y: Int): Boolean = x in minWidth..maxWidth && y in minHeight..maxHeight
 
     operator fun contains(point: Vector): Boolean = point in elements
+}
+
+class MutableVirtualGrid<T>(
+    minWidth: Int,
+    maxWidth: Int,
+    minHeight: Int,
+    maxHeight: Int,
+    private val elements: MutableMap<Vector, T>
+) : VirtualGrid<T>(minWidth, minHeight, maxWidth, maxHeight, elements) {
+    operator fun set(x: Int, y: Int, value: T) {
+        elements[Vector(x, y)] = value
+    }
+
+    operator fun set(point: Vector, value: T) {
+        elements[point] = value
+    }
+
+    fun remove(x: Int, y: Int) {
+        elements.remove(Vector(x, y))
+    }
+
+    fun remove(point: Vector) {
+        elements.remove(point)
+    }
 }

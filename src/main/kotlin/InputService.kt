@@ -25,5 +25,4 @@ class InputService(val httpClient: OkHttpClient, @Property("session") val sessio
     }
 
     fun getDayInput(day: Int, year: Int): List<String> = File("input/$year", "day$day.txt").readLines()
-
 }

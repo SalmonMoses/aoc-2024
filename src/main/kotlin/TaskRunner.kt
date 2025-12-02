@@ -13,7 +13,10 @@ import java.util.*
 import kotlin.reflect.full.findAnnotation
 
 @Single
-class TaskRunner(tasks: List<DayTask>, val inputService: InputService) {
+class TaskRunner(
+    tasks: List<DayTask>,
+    val inputService: InputService,
+) {
     private val days: Map<Int, DayTask> = tasks.map { task ->
         task::class.findAnnotation<Day>()?.let {
             val day = it.day
@@ -66,40 +69,60 @@ class TaskRunner(tasks: List<DayTask>, val inputService: InputService) {
     }
 
     private fun checkSpec(day: DayTask, solver: DayTask.(List<String>) -> String, spec: TaskSpec, title: String) {
-        val time = System.currentTimeMillis()
-        val actual = day.solver(spec.input.split("\n"))
-        val finishTime = System.currentTimeMillis() - time
-        val failed = actual != spec.expectedResult
-        print(
-            Colored.backgroundForeground(
-                " ${title.uppercase()} ",
-                if (failed) OutputColor.RED else OutputColor.GREEN,
-                OutputColor.BLACK,
-            )
-        )
-        if (failed) {
-            println(
-                Colored.foreground(
-                    " $actual != ${spec.expectedResult} [${finishTime} ms]",
-                    OutputColor.RED
-                )
-            )
-        } else {
-            println(
-                Colored.foreground(
-                    " $actual == ${spec.expectedResult} [${finishTime} ms]",
-                    OutputColor.GREEN
-                )
-            )
+        try {
+            val time = System.currentTimeMillis()
+            val actual = day.solver(spec.input.split("\n"))
+            val finishTime = System.currentTimeMillis() - time
+            println(formatSpecCheckResult(title, actual, spec.expectedResult, finishTime))
+        } catch (e: kotlin.NotImplementedError) {
+            println(getNotImplementedError(title))
         }
     }
 
     private fun runTask(day: DayTask, input: List<String>, task: DayTask.(List<String>) -> String, title: String) {
-        val time = System.currentTimeMillis()
-        val solution = day.task(input)
-        val finishTime = System.currentTimeMillis() - time
-        print(Colored.backgroundForeground(" ${title.uppercase()} ", OutputColor.BLUE, OutputColor.BLACK))
-        println(" Solution = $solution [${finishTime} ms]")
+        try {
+            val time = System.currentTimeMillis()
+            val solution = day.task(input)
+            val finishTime = System.currentTimeMillis() - time
+            print(Colored.backgroundForeground(" ${title.uppercase()} ", OutputColor.BLUE, OutputColor.BLACK))
+            println(" Solution = $solution [${finishTime} ms]")
+        } catch (e: kotlin.NotImplementedError) {
+            println(getNotImplementedError(title))
+        }
+    }
+
+    private fun getNotImplementedError(title: String): String {
+        val title = Colored.backgroundForeground(
+                " ${title.uppercase()} ",
+                OutputColor.GRAY,
+                OutputColor.BLACK,
+            )
+        val body = Colored.foreground(
+                " Not implemented yet",
+                OutputColor.GRAY
+            )
+        return "${title}${body}"
+    }
+
+    private fun formatSpecCheckResult(
+        title: String,
+        actualResult: String,
+        expectedResult: String,
+        finishTime: Long
+    ): String {
+        val failed = actualResult != expectedResult
+        val sign = if (failed) "!=" else "=="
+        val color = if (failed) OutputColor.RED else OutputColor.GREEN
+        val renderedTitle = Colored.backgroundForeground(
+            " ${title.uppercase()} ",
+            color,
+            OutputColor.BLACK,
+        )
+        val renderedResult = Colored.foreground(
+            "$actualResult $sign $expectedResult [$finishTime ms]",
+            color
+        )
+        return "$renderedTitle $renderedResult"
     }
 }
 
