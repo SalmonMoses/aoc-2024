@@ -41,17 +41,19 @@ class Day4 : DayTask {
 
     override fun task1(input: List<String>): String {
         val grid = Grid(input.map { row -> row.map { it == '@' } })
-        return grid.count { point -> grid[point] && grid.getNeighborValuesDiagonal(point).count { it } < 4 }.toString()
+        return grid
+            .count { point -> grid[point] && grid.getNeighborValuesDiagonal(point).count { it } < 4 }
+            .toString()
     }
 
     override fun task2(input: List<String>): String {
         val grid = MutableGrid(input.map { row -> row.map { it == '@' } })
-        var shouldContinue = false
+        var shouldContinue: Boolean
         var result = 0
         do {
             shouldContinue = false
-            grid.forEach { point ->
-                if (grid[point] && grid.getNeighborValuesDiagonal(point).count { it } < 4) {
+            grid.filter { grid[it] }.forEach { point ->
+                if (grid.getNeighborValuesDiagonal(point).count { it } < 4) {
                     result++
                     grid[point] = false
                     shouldContinue = true

@@ -73,3 +73,5 @@ fun <T> equalElementWise(a: List<T>, b: List<T>): Boolean {
     }
     return true
 }
+
+fun rangesOverlap(x: LongRange, y: LongRange): Boolean = x.last >= y.first && x.first <= y.last
