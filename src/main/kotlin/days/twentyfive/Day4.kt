@@ -5,9 +5,7 @@ import me.salmonmoses.days.DayTask
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.Grid
 import me.salmonmoses.utils.MutableGrid
-import me.salmonmoses.utils.Predicates
 import org.koin.core.annotation.Single
-import java.util.function.Predicate
 
 @Single
 @Day(4, 2025)

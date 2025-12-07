@@ -109,7 +109,7 @@ open class Grid<T>(final override val width: Int, final override val height: Int
 
     override operator fun get(x: Int, y: Int): T = grid[y * width + x]
 
-    constructor(gridInit: List<List<T>>) : this(gridInit.size, gridInit[0].size, { gridInit[it.y][it.x] })
+    constructor(gridInit: List<List<T>>) : this(gridInit[0].size, gridInit.size, { gridInit[it.y][it.x] })
 
     fun getNeighborValues(x: Int, y: Int): List<T> = getNeighbors(x, y).map { this[it.x, it.y] }
     fun getNeighborValues(point: Vector): List<T> = getNeighbors(point).map { this[it.x, it.y] }
@@ -122,7 +122,7 @@ open class Grid<T>(final override val width: Int, final override val height: Int
 }
 
 class MutableGrid<T>(width: Int, height: Int, init: (Vector) -> T) : Grid<T>(width, height, init) {
-    constructor(gridInit: List<List<T>>) : this(gridInit.size, gridInit[0].size, { gridInit[it.y][it.x] })
+    constructor(gridInit: List<List<T>>) : this(gridInit[0].size, gridInit.size, { gridInit[it.y][it.x] })
 
     operator fun set(x: Int, y: Int, value: T) {
         grid[y * width + x] = value
@@ -130,6 +130,14 @@ class MutableGrid<T>(width: Int, height: Int, init: (Vector) -> T) : Grid<T>(wid
 
     operator fun set(point: Vector, value: T) {
         grid[point.y * width + point.x] = value
+    }
+
+    fun copy(): MutableGrid<T> = MutableGrid(width, height) { this[it.x, it.y] }
+
+    fun copyWith(point: Vector, overridenValue: T): MutableGrid<T> {
+        val copiedGrid = MutableGrid(width, height, { this[it.x, it.y] })
+        copiedGrid[point] = overridenValue
+        return copiedGrid
     }
 }
 
