@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfour
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import org.koin.core.annotation.Single
 
@@ -13,7 +14,7 @@ class Day9 : DayTask {
     override val spec2: TaskSpec?
         get() = TaskSpec("2333133121414131402", "2858")
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         val filesystemDescriptor = input[0].split("").filter(String::isNotEmpty).map(String::toInt)
         val filesystem = mutableListOf<Int>()
         var currentFileId = 0
@@ -47,7 +48,7 @@ class Day9 : DayTask {
             .toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val filesystemDescriptor = input[0].split("").filter(String::isNotEmpty).map(String::toInt)
         val filesystem = mutableListOf<Pair<Int, Int>>()
         var currentFileId = 0

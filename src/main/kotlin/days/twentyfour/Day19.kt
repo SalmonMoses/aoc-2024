@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfour
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import org.koin.core.annotation.Single
 
@@ -93,14 +94,14 @@ class Day19 : DayTask {
         return variants
     }
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         val patterns = input[0].split(",").map(String::trim).toSet()
         val minPatternLength = patterns.minOf(String::length)
         val maxPatternLength = patterns.maxOf(String::length)
         return input.drop(2).count { isPossible(it, patterns, minPatternLength..maxPatternLength) }.toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val patterns = input[0].split(",").map(String::trim).toSet()
         val minPatternLength = patterns.minOf(String::length)
         val maxPatternLength = patterns.maxOf(String::length)

@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfive
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.Grid
 import me.salmonmoses.utils.MutableGrid
@@ -57,7 +58,7 @@ class Day7 : DayTask {
                     "...............", "40"
         )
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         val grid = MutableGrid(input.map { row ->
             row.map {
                 when (it) {
@@ -124,7 +125,7 @@ class Day7 : DayTask {
         return timelines
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val grid = Grid(input.map { row ->
             row.map {
                 when (it) {

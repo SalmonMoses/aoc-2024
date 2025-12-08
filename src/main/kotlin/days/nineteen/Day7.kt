@@ -2,6 +2,7 @@ package me.salmonmoses.days.nineteen
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.permutations
 import org.koin.core.annotation.Single
@@ -18,7 +19,7 @@ class Day7 : DayTask {
                     "53,1001,56,-1,56,1005,56,6,99,0,0,0,0,10", "18216"
         )
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         val memory = input[0].split(',').map(String::toInt)
         val phaseSettingsSequence = (0..4).toList()
         var highestOutput = 0
@@ -38,7 +39,7 @@ class Day7 : DayTask {
         return highestOutput.toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val memory = input[0].split(',').map(String::toInt)
         val phaseSettingsSequence = (5..9).toList()
         val computers = Array(5, { Computer(memory) })

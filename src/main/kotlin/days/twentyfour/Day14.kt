@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfour
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.Vector
 import org.koin.core.annotation.Single
@@ -67,7 +68,7 @@ class Day14 : DayTask {
         return quadrants.reduce(Long::times)
     }
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         var width = 0
         var height = 0
         val robots = robotPattern.findAll(input.joinToString("\n")).map {
@@ -92,7 +93,7 @@ class Day14 : DayTask {
         return calculateSafetyFactor(robots, width, height).toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         var width = 0
         var height = 0
         val robots = robotPattern.findAll(input.joinToString("\n")).map {

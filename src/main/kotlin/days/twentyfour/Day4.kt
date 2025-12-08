@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfour
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.Grid
 import me.salmonmoses.utils.Vector
@@ -37,7 +38,7 @@ class Day4 : DayTask {
                     "MXMXAXMASX", "9"
         )
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         val grid = Grid(input.map { it.split("").filter(String::isNotBlank) })
         val xs = grid.filter { grid[it] == "X" }
 
@@ -59,7 +60,7 @@ class Day4 : DayTask {
         return xmasCount.toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val grid = Grid(input.map { it.split("").filter(String::isNotBlank) })
         val starts = grid.filter { it.x in 1..<(grid.width - 1) && it.y in 1..<(grid.height - 1) && grid[it] == "A" }
 

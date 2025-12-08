@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfive
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.rangesOverlap
 import org.koin.core.annotation.Single
@@ -50,7 +51,7 @@ class Day5 : DayTask {
         return mergedRanges
     }
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         val freshIds = input.takeWhile { it != "" }
             .map { it.split("-") }
             .map { it[0].toLong()..it[1].toLong() }
@@ -62,7 +63,7 @@ class Day5 : DayTask {
             .toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val freshIds = input.takeWhile { it != "" }
             .map { it.split("-") }
             .map { it[0].toLong()..it[1].toLong() }

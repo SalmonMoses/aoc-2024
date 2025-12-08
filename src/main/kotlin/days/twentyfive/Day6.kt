@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfive
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import org.koin.core.annotation.Single
 import kotlin.collections.withIndex
@@ -24,7 +25,7 @@ class Day6 : DayTask {
                    "*   +   *   +", "3263827"
         )
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         val rows = mutableListOf<List<Long>>()
         for (i in 0..<(input.size - 1)) {
             rows += input[i].trim()
@@ -44,7 +45,7 @@ class Day6 : DayTask {
             .toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val reversedInput = input.reversed()
         val ops = reversedInput[0].trim().split(Regex(" +")).map { it[0] }
         val length = reversedInput[1].length

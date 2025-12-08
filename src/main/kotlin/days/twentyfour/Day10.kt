@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfour
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.DequeIterator
 import me.salmonmoses.utils.Grid
@@ -78,13 +79,13 @@ class Day10 : DayTask {
         return trails
     }
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         val gridList = input.map { row -> row.split("").filterNot { it.isBlank() }.map(String::toInt) }
         val grid = Grid(gridList)
         return grid.filter { grid[it] == 0 }.sumOf { traceTrailToNine(it, grid) }.toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val gridList = input.map { row -> row.split("").filterNot { it.isBlank() }.map(String::toInt) }
         val grid = Grid(gridList)
         return grid.filter { grid[it] == 0 }.sumOf { traceTrailNumber(it, grid) }.toString()

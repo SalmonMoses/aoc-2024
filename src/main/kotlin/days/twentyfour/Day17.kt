@@ -4,6 +4,7 @@ import org.koin.core.annotation.Single
 import me.salmonmoses.days.DayTask
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.days.Day
+import me.salmonmoses.days.ParamsMap
 import java.math.BigInteger
 
 object Disassembler {
@@ -154,13 +155,13 @@ class Day17 : DayTask {
         }
     }
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         val computer = Computer(registerA = input[0].split(":")[1].trim().toBigInteger())
         val program = input[4].split(":")[1].trim().split(",").map(String::toBigInteger)
         return computer.compute(program).joinToString(",")
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val program = input[4].split(":")[1].trim().split(",").map(String::toBigInteger)
         val aList = Array<BigInteger>(program.size) { BigInteger.ZERO }
         program.reversed().forEachIndexed { index, predictedOutput ->

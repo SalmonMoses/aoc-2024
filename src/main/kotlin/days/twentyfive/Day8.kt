@@ -2,11 +2,10 @@ package me.salmonmoses.days.twentyfive
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.Vector3
-import me.salmonmoses.utils.cartesianProduct
 import me.salmonmoses.utils.cartesianProductWithoutRepeats
-import me.salmonmoses.utils.permutations
 import org.koin.core.annotation.Single
 
 private data class JunctionBox(val coords: Vector3, var circuit: Circuit) {
@@ -53,7 +52,7 @@ class Day8 : DayTask {
                     "941,993,340\n" +
                     "862,61,35\n" +
                     "984,92,344\n" +
-                    "425,690,689", "40"
+                    "425,690,689", "40", mapOf("n" to 10)
         )
     override val spec2: TaskSpec
         get() = TaskSpec("162,817,812\n" +
@@ -77,7 +76,7 @@ class Day8 : DayTask {
                 "984,92,344\n" +
                 "425,690,689", "25272")
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         val junctionBoxes = input.map { it.split(",") }
             .map { JunctionBox(Vector3(it[0].toInt(), it[1].toInt(), it[2].toInt()), mutableSetOf()) }
         junctionBoxes.forEach { jb -> jb.circuit.add(jb) }
@@ -85,7 +84,7 @@ class Day8 : DayTask {
 
         val closestPairs = junctionBoxes.cartesianProductWithoutRepeats()
             .sortedBy { (first, second) -> first.coords.sqrtEuclidean(second.coords) }
-            .take(1000)
+            .take((params["n"] as? Int) ?: 1000)
         for (pair in closestPairs) {
             if (pair.first.circuit !== pair.second.circuit) {
                 circuits.remove(pair.second.circuit)
@@ -100,7 +99,7 @@ class Day8 : DayTask {
             .toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val junctionBoxes = input.map { it.split(",") }
             .map { JunctionBox(Vector3(it[0].toInt(), it[1].toInt(), it[2].toInt()), mutableSetOf()) }
         junctionBoxes.forEach { jb -> jb.circuit.add(jb) }

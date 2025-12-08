@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfour
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import org.koin.core.annotation.Single
 import kotlin.math.abs
@@ -28,7 +29,7 @@ class Day1 : DayTask {
                     "3   3", "31"
         )
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         val coordsLists = input.map {
             val coords = it.split("   ")
             Pair(coords[0].toInt(), coords[1].toInt())
@@ -40,7 +41,7 @@ class Day1 : DayTask {
             .toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val coordsLists = input.map {
             val coords = it.split("   ")
             Pair(coords[0].toInt(), coords[1].toInt())

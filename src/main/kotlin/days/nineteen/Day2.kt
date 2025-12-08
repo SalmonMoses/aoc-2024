@@ -2,6 +2,7 @@ package me.salmonmoses.days.nineteen
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import org.koin.core.annotation.Single
 
@@ -13,14 +14,14 @@ class Day2 : DayTask {
     override val spec2: TaskSpec?
         get() = null
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         val memory = input[0].split(',').map(String::toInt)
         val computer = Computer(memory)
         computer()
         return computer.getAtPointer(0).toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val memory = input[0].split(',').map(String::toInt).toMutableList()
         (0..99).forEach { noun ->
             (0..99).forEach { verb ->

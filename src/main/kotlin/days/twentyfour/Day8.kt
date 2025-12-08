@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfour
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.Vector
 import org.koin.core.annotation.Single
@@ -56,7 +57,7 @@ class Day8 : DayTask {
         return nodes.map { Pair(it.key, it.value.toList()) }.toMap()
     }
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         val nodes = getNodes(input)
         val size = input.size
         val antinodes = mutableSetOf<Vector>()
@@ -73,7 +74,7 @@ class Day8 : DayTask {
         return antinodes.filter { it.x in 0..<size && it.y in 0..<size }.size.toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val nodes = getNodes(input)
         val size = input.size
         val antinodes = mutableSetOf<Vector>()

@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfour
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import org.koin.core.annotation.Single
 import kotlin.math.absoluteValue
@@ -41,11 +42,11 @@ class Day2 : DayTask {
         return true
     }
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         return input.map { it.split(" ").map(String::toInt) }.count(::isSafe).toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         return input.map { it.split(" ").map(String::toInt) }.count {
             for (i in it.indices) {
                 if (isSafe(it.filterIndexed { index, _ -> index != i })) {

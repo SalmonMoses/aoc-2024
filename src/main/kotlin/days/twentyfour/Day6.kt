@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfour
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.*
 import org.koin.core.annotation.Single
@@ -58,7 +59,7 @@ class Day6 : DayTask {
         return true
     }
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         var guardPosition = Vector(0, 0)
         var guardDirection = Vector(0, -1)
         val grid = MutableGrid(input.size, input[0].trim().length) {
@@ -86,7 +87,7 @@ class Day6 : DayTask {
         return visited.size.toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         var guardPosition = Vector(0, 0)
         val guardDirection = Vector(0, -1)
         val grid = MutableGrid(input.size, input[0].trim().length) {

@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfour
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.isInteger
 import org.koin.core.annotation.Single
@@ -56,7 +57,7 @@ class Day13 : DayTask {
         return if (m.isInteger() && n.isInteger() && m >= 0 && n >= 0) m * 3 + n else 0.0
     }
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         val arcadeRegex = Regex(
             "Button A: X[+]([0-9]+), Y[+]([0-9]+)\n" +
                     "Button B: X[+]([0-9]+), Y[+]([0-9]+)\n" +
@@ -75,7 +76,7 @@ class Day13 : DayTask {
         }.sumOf { it.toLong() }.toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val arcadeRegex = Regex(
             "Button A: X[+]([0-9]+), Y[+]([0-9]+)\n" +
                     "Button B: X[+]([0-9]+), Y[+]([0-9]+)\n" +

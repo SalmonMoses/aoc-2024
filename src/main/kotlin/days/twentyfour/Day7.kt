@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfour
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import org.koin.core.annotation.Single
 
@@ -72,14 +73,14 @@ class Day7 : DayTask {
         return result to coefs
     }
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         return input.map(::parseEquation)
             .filter { equationCanBeValid(it.first, it.second[0], it.second.drop(1)) }
             .sumOf(Equation::first)
             .toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         return input.map(::parseEquation)
             .filter { equationCanBeValidWithConcatenation(it.first, it.second[0], it.second.drop(1)) }
             .sumOf(Equation::first)

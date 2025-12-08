@@ -2,6 +2,7 @@ package me.salmonmoses
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.Colored
 import me.salmonmoses.utils.OutputColor
@@ -40,8 +41,12 @@ class TaskRunner(
                 checkSpec(it, DayTask::task1, spec, "task 1")
             }
 
-            it.spec2?.let { spec ->
-                checkSpec(it, DayTask::task2, spec, "task 2")
+            try {
+                it.spec2?.let { spec ->
+                    checkSpec(it, DayTask::task2, spec, "task 2")
+                }
+            } catch (e: NotImplementedError) {
+                println(getNotImplementedError("task 2"))
             }
 
             val input = inputService.getDayInput(day, year)
@@ -68,10 +73,10 @@ class TaskRunner(
         }
     }
 
-    private fun checkSpec(day: DayTask, solver: DayTask.(List<String>) -> String, spec: TaskSpec, title: String) {
+    private fun checkSpec(day: DayTask, solver: DayTask.(List<String>, ParamsMap) -> String, spec: TaskSpec, title: String) {
         try {
             val time = System.currentTimeMillis()
-            val actual = day.solver(spec.input.split("\n"))
+            val actual = day.solver(spec.input.split("\n"), spec.params)
             val finishTime = System.currentTimeMillis() - time
             println(formatSpecCheckResult(title, actual, spec.expectedResult, finishTime))
         } catch (e: kotlin.NotImplementedError) {

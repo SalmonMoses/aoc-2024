@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfive
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.steppedReduce
 import org.koin.core.annotation.Single
@@ -43,7 +44,7 @@ class Day1 : DayTask {
         .map { Pair(it[0], it.substring(1)) }
         .map { (dir, step) -> (if (dir == 'R') 1 else -1) * step.toInt() }
 
-    override fun task1(input: List<String>): String =
+    override fun task1(input: List<String>, params: ParamsMap): String =
         parseInput(input)
             .steppedReduce(50)
             { current, step ->
@@ -51,7 +52,7 @@ class Day1 : DayTask {
             }.count { it == 0 }
             .toString()
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val input = parseInput(input)
         var currentValue = 50
         var result = 0

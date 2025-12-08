@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfour
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.*
 import org.koin.core.annotation.Single
@@ -185,7 +186,7 @@ class Day15 : DayTask {
         }
     }
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         val inputIterator = input.iterator().withIndex()
         val rows = mutableListOf<MutableList<MapEntityType>>()
         var robotPosition = Vector(0, 0)
@@ -238,7 +239,7 @@ class Day15 : DayTask {
         return map.filter { map[it] == MapEntityType.Box }.sumOf { it.y * 100 + it.x }.toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val inputIterator = input.iterator().withIndex()
         val entities = mutableListOf<MapEntity>()
         var robotPosition = Vector(0, 0)

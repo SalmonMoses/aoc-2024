@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfive
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import org.koin.core.annotation.Single
 import kotlin.math.pow
@@ -39,11 +40,11 @@ class Day3 : DayTask {
         return digits.withIndex().sumOf { (i, digit) -> digit * 10.0.pow(length - i - 1) }.toLong()
     }
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         return input.sumOf { findMaxInRow(it, 2) }.toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         return input.sumOf { findMaxInRow(it, 12) }.toString()
     }
 }

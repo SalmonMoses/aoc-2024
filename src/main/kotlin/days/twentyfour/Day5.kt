@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfour
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import org.koin.core.annotation.Single
 
@@ -71,7 +72,7 @@ class Day5 : DayTask {
                     "97,13,75,29,47", "123"
         )
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         val rules = mutableMapOf<Int, MutableList<Int>>()
 
         var line = 0
@@ -116,7 +117,7 @@ class Day5 : DayTask {
         return sum.toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val rules = mutableMapOf<Int, MutableList<Int>>()
 
         var line = 0

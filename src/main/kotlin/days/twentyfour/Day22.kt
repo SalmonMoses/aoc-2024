@@ -18,7 +18,7 @@ class Day22 : DayTask {
 
     private val pruneMod = 16777216uL
 
-    override fun task1(input: List<String>): String =
+    override fun task1(input: List<String>, params: ParamsMap): String =
         input.map(String::toULong).map {
             var currentSecret = it
             repeat(2000) {
@@ -29,7 +29,7 @@ class Day22 : DayTask {
             currentSecret
         }.reduce(ULong::plus).toString()
 
-    override fun task2(input: List<String>): String = input.map(String::toULong).map {
+    override fun task2(input: List<String>, params: ParamsMap): String = input.map(String::toULong).map {
         var currentSecret = it
         repeat(2000) {
             currentSecret = ((currentSecret shl 6) xor currentSecret) % pruneMod

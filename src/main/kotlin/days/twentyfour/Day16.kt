@@ -2,13 +2,12 @@ package me.salmonmoses.days.twentyfour
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
-import me.salmonmoses.utils.DequeIterator
 import me.salmonmoses.utils.Grid
 import me.salmonmoses.utils.Vector
 import org.koin.core.annotation.Single
 import java.util.*
-import kotlin.collections.ArrayDeque
 
 @Single
 @Day(16, 2024)
@@ -52,7 +51,7 @@ class Day16 : DayTask {
 
     private data class PathfindingInfo(val cameFrom: Vector?, val direction: Vector, val score: Int)
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         var start = Vector(0, 0)
         var end = Vector(0, 0)
         val grid = Grid(input.mapIndexed { y, row ->
@@ -102,7 +101,7 @@ class Day16 : DayTask {
         return infos[end]!!.score.toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         var start = Vector(0, 0)
         var end = Vector(0, 0)
         val grid = Grid(input.mapIndexed { y, row ->

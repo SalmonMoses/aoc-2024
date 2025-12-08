@@ -2,11 +2,10 @@ package me.salmonmoses.days.twentyfour
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.*
 import org.koin.core.annotation.Single
-import java.nio.file.Path
-import java.util.PriorityQueue
 
 @Single
 @Day(18, 2024)
@@ -112,7 +111,7 @@ class Day18 : DayTask {
         return path
     }
 
-    override fun task1(input: List<String>): String {
+    override fun task1(input: List<String>, params: ParamsMap): String {
         val time = input[0].toInt()
         val bytes = input.drop(1).take(time).map {
             val pair = it.trim().split(",")
@@ -129,7 +128,7 @@ class Day18 : DayTask {
         return path[end].score.toString()
     }
 
-    override fun task2(input: List<String>): String {
+    override fun task2(input: List<String>, params: ParamsMap): String {
         val initialTime = input[0].toInt()
         val bytes = input.drop(1).map {
             val pair = it.trim().split(",")

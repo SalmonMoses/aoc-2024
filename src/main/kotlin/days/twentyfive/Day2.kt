@@ -2,6 +2,7 @@ package me.salmonmoses.days.twentyfive
 
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
+import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import org.koin.core.annotation.Single
 import kotlin.math.ceil
@@ -63,6 +64,6 @@ class Day2 : DayTask {
             .filter { !it.second }
             .sumOf { it.first }.toString()
 
-    override fun task1(input: List<String>): String = task(input[0], this::checkId1)
-    override fun task2(input: List<String>): String = task(input[0], this::checkId2)
+    override fun task1(input: List<String>, params: ParamsMap): String = task(input[0], this::checkId1)
+    override fun task2(input: List<String>, params: ParamsMap): String = task(input[0], this::checkId2)
 }
