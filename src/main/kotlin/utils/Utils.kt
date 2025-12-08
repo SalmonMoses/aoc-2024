@@ -9,6 +9,14 @@ fun <S, T> Iterable<S>.cartesianProduct(other: Iterable<T>) = this.flatMap { thi
     }
 }
 
+fun <T> List<T>.cartesianProductWithoutRepeats(): Iterable<Pair<T, T>> = sequence<Pair<T, T>> {
+    for (i in 0..<(size - 1)) {
+        for (j in (i + 1)..<size) {
+            yield(Pair(get(i), get(j)))
+        }
+    }
+}.asIterable()
+
 fun <S, T> Iterable<S>.steppedReduce(initial: T, operation: (T, S) -> T): Iterable<T> {
     var current = initial
     return this.map {

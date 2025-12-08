@@ -3,7 +3,6 @@ package me.salmonmoses.days.twentyfive
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
 import me.salmonmoses.days.TaskSpec
-import me.salmonmoses.utils.DequeIterator
 import me.salmonmoses.utils.Grid
 import me.salmonmoses.utils.MutableGrid
 import me.salmonmoses.utils.Vector
@@ -57,11 +56,6 @@ class Day7 : DayTask {
                     ".^.^.^.^.^...^.\n" +
                     "...............", "40"
         )
-
-    private data class Timeline(
-        val start: Vector,
-        val grid: MutableGrid<GridObject>
-    )
 
     override fun task1(input: List<String>): String {
         val grid = MutableGrid(input.map { row ->
