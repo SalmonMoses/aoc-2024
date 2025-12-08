@@ -4,7 +4,10 @@ import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
 import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
-import me.salmonmoses.utils.*
+import me.salmonmoses.utils.BaseGrid
+import me.salmonmoses.utils.Grid
+import me.salmonmoses.utils.MutableGrid
+import me.salmonmoses.utils.Vector
 import org.koin.core.annotation.Single
 
 @Single
@@ -12,67 +15,67 @@ import org.koin.core.annotation.Single
 class Day18 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(
-            "12\n" +
-                    "5,4\n" +
-                    "4,2\n" +
-                    "4,5\n" +
-                    "3,0\n" +
-                    "2,1\n" +
-                    "6,3\n" +
-                    "2,4\n" +
-                    "1,5\n" +
-                    "0,6\n" +
-                    "3,3\n" +
-                    "2,6\n" +
-                    "5,1\n" +
-                    "1,2\n" +
-                    "5,5\n" +
-                    "2,5\n" +
-                    "6,5\n" +
-                    "1,4\n" +
-                    "0,4\n" +
-                    "6,4\n" +
-                    "1,1\n" +
-                    "6,1\n" +
-                    "1,0\n" +
-                    "0,5\n" +
-                    "1,6\n" +
-                    "2,0", "22"
+                "12\n" +
+                        "5,4\n" +
+                        "4,2\n" +
+                        "4,5\n" +
+                        "3,0\n" +
+                        "2,1\n" +
+                        "6,3\n" +
+                        "2,4\n" +
+                        "1,5\n" +
+                        "0,6\n" +
+                        "3,3\n" +
+                        "2,6\n" +
+                        "5,1\n" +
+                        "1,2\n" +
+                        "5,5\n" +
+                        "2,5\n" +
+                        "6,5\n" +
+                        "1,4\n" +
+                        "0,4\n" +
+                        "6,4\n" +
+                        "1,1\n" +
+                        "6,1\n" +
+                        "1,0\n" +
+                        "0,5\n" +
+                        "1,6\n" +
+                        "2,0", "22"
         )
-    override val spec2: TaskSpec?
+    override val spec2: TaskSpec
         get() = TaskSpec(
-            "12\n" +
-                    "5,4\n" +
-                    "4,2\n" +
-                    "4,5\n" +
-                    "3,0\n" +
-                    "2,1\n" +
-                    "6,3\n" +
-                    "2,4\n" +
-                    "1,5\n" +
-                    "0,6\n" +
-                    "3,3\n" +
-                    "2,6\n" +
-                    "5,1\n" +
-                    "1,2\n" +
-                    "5,5\n" +
-                    "2,5\n" +
-                    "6,5\n" +
-                    "1,4\n" +
-                    "0,4\n" +
-                    "6,4\n" +
-                    "1,1\n" +
-                    "6,1\n" +
-                    "1,0\n" +
-                    "0,5\n" +
-                    "1,6\n" +
-                    "2,0", "6,1"
+                "12\n" +
+                        "5,4\n" +
+                        "4,2\n" +
+                        "4,5\n" +
+                        "3,0\n" +
+                        "2,1\n" +
+                        "6,3\n" +
+                        "2,4\n" +
+                        "1,5\n" +
+                        "0,6\n" +
+                        "3,3\n" +
+                        "2,6\n" +
+                        "5,1\n" +
+                        "1,2\n" +
+                        "5,5\n" +
+                        "2,5\n" +
+                        "6,5\n" +
+                        "1,4\n" +
+                        "0,4\n" +
+                        "6,4\n" +
+                        "1,1\n" +
+                        "6,1\n" +
+                        "1,0\n" +
+                        "0,5\n" +
+                        "1,6\n" +
+                        "2,0", "6,1"
         )
 
     private data class PathfindingInfo(val cameFrom: Vector?, val score: Int)
 
     private fun makeGrid(width: Int, height: Int, bytes: Set<Vector>): Grid<Boolean> =
-        Grid(width, height) { it !in bytes }
+            Grid(width, height) { it !in bytes }
 
     private fun findPath(grid: BaseGrid<Boolean>, start: Vector, end: Vector): MutableGrid<PathfindingInfo> {
         val infos = MutableGrid(grid.width, grid.height) { PathfindingInfo(null, Int.MAX_VALUE) }

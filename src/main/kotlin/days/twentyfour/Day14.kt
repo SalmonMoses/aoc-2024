@@ -18,18 +18,18 @@ class Day14 : DayTask {
 
     override val spec1: TaskSpec
         get() = TaskSpec(
-            "p=0,4 v=3,-3\n" +
-                    "p=6,3 v=-1,-3\n" +
-                    "p=10,3 v=-1,2\n" +
-                    "p=2,0 v=2,-1\n" +
-                    "p=0,0 v=1,3\n" +
-                    "p=3,0 v=-2,-2\n" +
-                    "p=7,6 v=-1,-3\n" +
-                    "p=3,0 v=-1,-2\n" +
-                    "p=9,3 v=2,3\n" +
-                    "p=7,3 v=-1,2\n" +
-                    "p=2,4 v=2,-3\n" +
-                    "p=9,5 v=-3,-3", "12"
+                "p=0,4 v=3,-3\n" +
+                        "p=6,3 v=-1,-3\n" +
+                        "p=10,3 v=-1,2\n" +
+                        "p=2,0 v=2,-1\n" +
+                        "p=0,0 v=1,3\n" +
+                        "p=3,0 v=-2,-2\n" +
+                        "p=7,6 v=-1,-3\n" +
+                        "p=3,0 v=-1,-2\n" +
+                        "p=9,3 v=2,3\n" +
+                        "p=7,3 v=-1,2\n" +
+                        "p=2,4 v=2,-3\n" +
+                        "p=9,5 v=-3,-3", "12"
         )
     override val spec2: TaskSpec?
         get() = null
@@ -37,7 +37,7 @@ class Day14 : DayTask {
     private val robotPattern = Regex("p=(-?[0-9]+),(-?[0-9]+) v=(-?[0-9]+),(-?[0-9]+)")
 
     private fun renderRobots(robots: List<Robot>, width: Int, height: Int, outputStream: OutputStream) {
-        val size = Dimension(width, height)
+        Dimension(width, height)
         val img = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
         val robotsByPosition = robots.groupBy { it.position }
         (0..<height).forEach { y ->
@@ -85,8 +85,8 @@ class Day14 : DayTask {
         repeat(100) {
             robots.forEach {
                 it.position = Vector(
-                    (it.position.x + it.velocity.x + width + 1) % (width + 1),
-                    (it.position.y + it.velocity.y + height + 1) % (height + 1)
+                        (it.position.x + it.velocity.x + width + 1) % (width + 1),
+                        (it.position.y + it.velocity.y + height + 1) % (height + 1)
                 )
             }
         }
@@ -110,8 +110,8 @@ class Day14 : DayTask {
         repeat(100000) { step ->
             robots.forEach {
                 it.position = Vector(
-                    (it.position.x + it.velocity.x + width + 1) % (width + 1),
-                    (it.position.y + it.velocity.y + height + 1) % (height + 1)
+                        (it.position.x + it.velocity.x + width + 1) % (width + 1),
+                        (it.position.y + it.velocity.y + height + 1) % (height + 1)
                 )
             }
             FileOutputStream("output/day14/step${step + 1}.bmp").use { renderRobots(robots, width, height, it) }

@@ -46,8 +46,8 @@ fun <T> List<T>.permutations(): Iterator<List<T>> {
     fun <T> List<T>.permutation(nth: Long): List<T> {
         if (isEmpty()) return emptyList()
         val index = (nth % size)
-            .also { require(it < Int.MAX_VALUE) }
-            .toInt()
+                .also { require(it < Int.MAX_VALUE) }
+                .toInt()
         // Grab the first element...
         val head = elementAt(index)
         // ...make a list of what's left...

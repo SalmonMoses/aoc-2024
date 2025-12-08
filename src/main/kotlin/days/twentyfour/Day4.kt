@@ -13,29 +13,29 @@ import org.koin.core.annotation.Single
 class Day4 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(
-            "MMMSXXMASM\n" +
-                    "MSAMXMSMSA\n" +
-                    "AMXSXMAAMM\n" +
-                    "MSAMASMSMX\n" +
-                    "XMASAMXAMM\n" +
-                    "XXAMMXXAMA\n" +
-                    "SMSMSASXSS\n" +
-                    "SAXAMASAAA\n" +
-                    "MAMMMXMMMM\n" +
-                    "MXMXAXMASX", "18"
+                "MMMSXXMASM\n" +
+                        "MSAMXMSMSA\n" +
+                        "AMXSXMAAMM\n" +
+                        "MSAMASMSMX\n" +
+                        "XMASAMXAMM\n" +
+                        "XXAMMXXAMA\n" +
+                        "SMSMSASXSS\n" +
+                        "SAXAMASAAA\n" +
+                        "MAMMMXMMMM\n" +
+                        "MXMXAXMASX", "18"
         )
-    override val spec2: TaskSpec?
+    override val spec2: TaskSpec
         get() = TaskSpec(
-            "MMMSXXMASM\n" +
-                    "MSAMXMSMSA\n" +
-                    "AMXSXMAAMM\n" +
-                    "MSAMASMSMX\n" +
-                    "XMASAMXAMM\n" +
-                    "XXAMMXXAMA\n" +
-                    "SMSMSASXSS\n" +
-                    "SAXAMASAAA\n" +
-                    "MAMMMXMMMM\n" +
-                    "MXMXAXMASX", "9"
+                "MMMSXXMASM\n" +
+                        "MSAMXMSMSA\n" +
+                        "AMXSXMAAMM\n" +
+                        "MSAMASMSMX\n" +
+                        "XMASAMXAMM\n" +
+                        "XXAMMXXAMA\n" +
+                        "SMSMSASXSS\n" +
+                        "SAXAMASAAA\n" +
+                        "MAMMMXMMMM\n" +
+                        "MXMXAXMASX", "9"
         )
 
     override fun task1(input: List<String>, params: ParamsMap): String {
@@ -45,12 +45,12 @@ class Day4 : DayTask {
         var xmasCount = 0
         for (potentialStart in xs) {
             for (neighbor in grid.getNeighborsDiagonal(potentialStart)
-                .filter { grid[it] == "M" }) {
+                    .filter { grid[it] == "M" }) {
                 val direction = neighbor - potentialStart
                 val potentialA = neighbor + direction
                 val potentialS = neighbor + direction * 2
                 if (grid.isValid(potentialA) && grid[potentialA] == "A"
-                    && grid.isValid(potentialS) && grid[potentialS] == "S"
+                        && grid.isValid(potentialS) && grid[potentialS] == "S"
                 ) {
                     xmasCount++
                 }
@@ -69,9 +69,9 @@ class Day4 : DayTask {
         var xmasCount = 0
         for (point in starts) {
             if (((grid[point + rightDiagonal] == "M" && grid[point - rightDiagonal] == "S")
-                        || (grid[point + rightDiagonal] == "S" && grid[point - rightDiagonal] == "M"))
-                && ((grid[point + leftDiagonal] == "M" && grid[point - leftDiagonal] == "S")
-                        || (grid[point + leftDiagonal] == "S" && grid[point - leftDiagonal] == "M"))
+                            || (grid[point + rightDiagonal] == "S" && grid[point - rightDiagonal] == "M"))
+                    && ((grid[point + leftDiagonal] == "M" && grid[point - leftDiagonal] == "S")
+                            || (grid[point + leftDiagonal] == "S" && grid[point - leftDiagonal] == "M"))
             ) {
                 xmasCount++
             }

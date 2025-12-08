@@ -12,21 +12,21 @@ import kotlin.math.abs
 class Day1 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(
-            "3   4\n" +
-                    "4   3\n" +
-                    "2   5\n" +
-                    "1   3\n" +
-                    "3   9\n" +
-                    "3   3", "11"
+                "3   4\n" +
+                        "4   3\n" +
+                        "2   5\n" +
+                        "1   3\n" +
+                        "3   9\n" +
+                        "3   3", "11"
         )
-    override val spec2: TaskSpec?
+    override val spec2: TaskSpec
         get() = TaskSpec(
-            "3   4\n" +
-                    "4   3\n" +
-                    "2   5\n" +
-                    "1   3\n" +
-                    "3   9\n" +
-                    "3   3", "31"
+                "3   4\n" +
+                        "4   3\n" +
+                        "2   5\n" +
+                        "1   3\n" +
+                        "3   9\n" +
+                        "3   3", "31"
         )
 
     override fun task1(input: List<String>, params: ParamsMap): String {
@@ -37,8 +37,8 @@ class Day1 : DayTask {
         val sortedX = coordsLists.first.sorted()
         val sortedY = coordsLists.second.sorted()
         return sortedX.zip(sortedY)
-            .sumOf { (x, y) -> abs(x - y) }
-            .toString()
+                .sumOf { (x, y) -> abs(x - y) }
+                .toString()
     }
 
     override fun task2(input: List<String>, params: ParamsMap): String {
@@ -47,7 +47,7 @@ class Day1 : DayTask {
             Pair(coords[0].toInt(), coords[1].toInt())
         }.unzip()
         return coordsLists.first
-            .sumOf { x -> x * coordsLists.second.count { it == x } }
-            .toString()
+                .sumOf { x -> x * coordsLists.second.count { it == x } }
+                .toString()
     }
 }

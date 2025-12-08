@@ -11,7 +11,7 @@ import org.koin.core.annotation.Single
 class Day9 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec("2333133121414131402", "1928")
-    override val spec2: TaskSpec?
+    override val spec2: TaskSpec
         get() = TaskSpec("2333133121414131402", "2858")
 
     override fun task1(input: List<String>, params: ParamsMap): String {
@@ -44,8 +44,8 @@ class Day9 : DayTask {
             frontPointer++
         }
         return filesystem.map(Int::toLong).withIndex()
-            .sumOf { file -> file.index * file.value.coerceAtLeast(0) }
-            .toString()
+                .sumOf { file -> file.index * file.value.coerceAtLeast(0) }
+                .toString()
     }
 
     override fun task2(input: List<String>, params: ParamsMap): String {
@@ -84,9 +84,9 @@ class Day9 : DayTask {
             }
         }
         return fullFilesystem
-            .map(Int::toLong)
-            .withIndex()
-            .sumOf { file -> file.index * file.value.coerceAtLeast(0) }
-            .toString()
+                .map(Int::toLong)
+                .withIndex()
+                .sumOf { file -> file.index * file.value.coerceAtLeast(0) }
+                .toString()
     }
 }

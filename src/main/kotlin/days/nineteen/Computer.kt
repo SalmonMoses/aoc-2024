@@ -45,7 +45,7 @@ class Computer(memoryInit: List<Int>) {
             val opcode = instruction % 100
             val firstOpMode = getOperandMode(instruction % 1000 / 100)
             val secondOpMode = getOperandMode(instruction % 10000 / 1000)
-            val thirdOpMode = getOperandMode(instruction % 100000 / 10000)
+            getOperandMode(instruction % 100000 / 10000)
             when (opcode) {
                 1 -> add(firstOpMode, secondOpMode)
                 2 -> mul(firstOpMode, secondOpMode)
@@ -54,6 +54,7 @@ class Computer(memoryInit: List<Int>) {
                     output(firstOpMode)
                     return lastOutput
                 }
+
                 5 -> jnz(firstOpMode, secondOpMode)
                 6 -> jz(firstOpMode, secondOpMode)
                 7 -> lessThen(firstOpMode, secondOpMode)

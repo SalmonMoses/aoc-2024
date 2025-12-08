@@ -9,9 +9,9 @@ import org.koin.core.annotation.Single
 
 enum class MapEntityType { Wall, Box, Floor }
 class MapEntity(
-    val type: MapEntityType,
-    var position: Vector,
-    val size: Vector
+        val type: MapEntityType,
+        var position: Vector,
+        val size: Vector
 )
 
 class RobotMap(val width: Int, val height: Int) {
@@ -114,58 +114,58 @@ class RobotMap(val width: Int, val height: Int) {
 class Day15 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(
-            "##########\n" +
-                    "#..O..O.O#\n" +
-                    "#......O.#\n" +
-                    "#.OO..O.O#\n" +
-                    "#..O@..O.#\n" +
-                    "#O#..O...#\n" +
-                    "#O..O..O.#\n" +
-                    "#.OO.O.OO#\n" +
-                    "#....O...#\n" +
-                    "##########\n" +
-                    "\n" +
-                    "<vv>^<v^>v>^vv^v>v<>v^v<v<^vv<<<^><<><>>v<vvv<>^v^>^<<<><<v<<<v^vv^v>^\n" +
-                    "vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v\n" +
-                    "><>vv>v^v^<>><>>>><^^>vv>v<^^^>>v^v^<^^>v^^>v^<^v>v<>>v^v^<v>v^^<^^vv<\n" +
-                    "<<v<^>>^^^^>>>v^<>vvv^><v<<<>^^^vv^<vvv>^>v<^^^^v<>^>vvvv><>>v^<<^^^^^\n" +
-                    "^><^><>>><>^^<<^^v>>><^<v>^<vv>>v>>>^v><>^v><<<<v>>v<v<v>vvv>^<><<>^><\n" +
-                    "^>><>^v<><^vvv<^^<><v<<<<<><^v<<<><<<^^<v<^^^><^>>^<v^><<<^>>^v<v^v<v^\n" +
-                    ">^>>^v>vv>^<<^v<>><<><<v<<v><>v<^vv<<<>^^v^>^^>>><<^v>>v^v><^^>>^<>vv^\n" +
-                    "<><^^>^^^<><vvvvv^v<v<<>^v<v>v<<^><<><<><<<^^<<<^<<>><<><^^^>^^<>^>v<>\n" +
-                    "^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>\n" +
-                    "v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^", "10092"
+                "##########\n" +
+                        "#..O..O.O#\n" +
+                        "#......O.#\n" +
+                        "#.OO..O.O#\n" +
+                        "#..O@..O.#\n" +
+                        "#O#..O...#\n" +
+                        "#O..O..O.#\n" +
+                        "#.OO.O.OO#\n" +
+                        "#....O...#\n" +
+                        "##########\n" +
+                        "\n" +
+                        "<vv>^<v^>v>^vv^v>v<>v^v<v<^vv<<<^><<><>>v<vvv<>^v^>^<<<><<v<<<v^vv^v>^\n" +
+                        "vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v\n" +
+                        "><>vv>v^v^<>><>>>><^^>vv>v<^^^>>v^v^<^^>v^^>v^<^v>v<>>v^v^<v>v^^<^^vv<\n" +
+                        "<<v<^>>^^^^>>>v^<>vvv^><v<<<>^^^vv^<vvv>^>v<^^^^v<>^>vvvv><>>v^<<^^^^^\n" +
+                        "^><^><>>><>^^<<^^v>>><^<v>^<vv>>v>>>^v><>^v><<<<v>>v<v<v>vvv>^<><<>^><\n" +
+                        "^>><>^v<><^vvv<^^<><v<<<<<><^v<<<><<<^^<v<^^^><^>>^<v^><<<^>>^v<v^v<v^\n" +
+                        ">^>>^v>vv>^<<^v<>><<><<v<<v><>v<^vv<<<>^^v^>^^>>><<^v>>v^v><^^>>^<>vv^\n" +
+                        "<><^^>^^^<><vvvvv^v<v<<>^v<v>v<<^><<><<><<<^^<<<^<<>><<><^^^>^^<>^>v<>\n" +
+                        "^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>\n" +
+                        "v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^", "10092"
         )
-    override val spec2: TaskSpec?
+    override val spec2: TaskSpec
         get() = TaskSpec(
-            "##########\n" +
-                    "#..O..O.O#\n" +
-                    "#......O.#\n" +
-                    "#.OO..O.O#\n" +
-                    "#..O@..O.#\n" +
-                    "#O#..O...#\n" +
-                    "#O..O..O.#\n" +
-                    "#.OO.O.OO#\n" +
-                    "#....O...#\n" +
-                    "##########\n" +
-                    "\n" +
-                    "<vv>^<v^>v>^vv^v>v<>v^v<v<^vv<<<^><<><>>v<vvv<>^v^>^<<<><<v<<<v^vv^v>^\n" +
-                    "vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v\n" +
-                    "><>vv>v^v^<>><>>>><^^>vv>v<^^^>>v^v^<^^>v^^>v^<^v>v<>>v^v^<v>v^^<^^vv<\n" +
-                    "<<v<^>>^^^^>>>v^<>vvv^><v<<<>^^^vv^<vvv>^>v<^^^^v<>^>vvvv><>>v^<<^^^^^\n" +
-                    "^><^><>>><>^^<<^^v>>><^<v>^<vv>>v>>>^v><>^v><<<<v>>v<v<v>vvv>^<><<>^><\n" +
-                    "^>><>^v<><^vvv<^^<><v<<<<<><^v<<<><<<^^<v<^^^><^>>^<v^><<<^>>^v<v^v<v^\n" +
-                    ">^>>^v>vv>^<<^v<>><<><<v<<v><>v<^vv<<<>^^v^>^^>>><<^v>>v^v><^^>>^<>vv^\n" +
-                    "<><^^>^^^<><vvvvv^v<v<<>^v<v>v<<^><<><<><<<^^<<<^<<>><<><^^^>^^<>^>v<>\n" +
-                    "^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>\n" +
-                    "v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^", "9021"
+                "##########\n" +
+                        "#..O..O.O#\n" +
+                        "#......O.#\n" +
+                        "#.OO..O.O#\n" +
+                        "#..O@..O.#\n" +
+                        "#O#..O...#\n" +
+                        "#O..O..O.#\n" +
+                        "#.OO.O.OO#\n" +
+                        "#....O...#\n" +
+                        "##########\n" +
+                        "\n" +
+                        "<vv>^<v^>v>^vv^v>v<>v^v<v<^vv<<<^><<><>>v<vvv<>^v^>^<<<><<v<<<v^vv^v>^\n" +
+                        "vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v\n" +
+                        "><>vv>v^v^<>><>>>><^^>vv>v<^^^>>v^v^<^^>v^^>v^<^v>v<>>v^v^<v>v^^<^^vv<\n" +
+                        "<<v<^>>^^^^>>>v^<>vvv^><v<<<>^^^vv^<vvv>^>v<^^^^v<>^>vvvv><>>v^<<^^^^^\n" +
+                        "^><^><>>><>^^<<^^v>>><^<v>^<vv>>v>>>^v><>^v><<<<v>>v<v<v>vvv>^<><<>^><\n" +
+                        "^>><>^v<><^vvv<^^<><v<<<<<><^v<<<><<<^^<v<^^^><^>>^<v^><<<^>>^v<v^v<v^\n" +
+                        ">^>>^v>vv>^<<^v<>><<><<v<<v><>v<^vv<<<>^^v^>^^>>><<^v>>v^v><^^>>^<>vv^\n" +
+                        "<><^^>^^^<><vvvvv^v<v<<>^v<v>v<<^><<><<><<<^^<<<^<<>><<><^^^>^^<>^>v<>\n" +
+                        "^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>\n" +
+                        "v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^", "9021"
         )
 
     private val directions = mapOf(
-        '>' to Vector(1, 0),
-        '^' to Vector(0, -1),
-        '<' to Vector(-1, 0),
-        'v' to Vector(0, 1),
+            '>' to Vector(1, 0),
+            '^' to Vector(0, -1),
+            '<' to Vector(-1, 0),
+            'v' to Vector(0, 1),
     )
 
     private fun printMap(map: BaseGrid<MapEntityType>, robot: Vector) {
@@ -281,8 +281,8 @@ class Day15 : DayTask {
         }
         map.printMap(robotPosition)
         return map.entities()
-            .asSequence()
-            .filter { it.type == MapEntityType.Box }
-            .sumOf { it.position.y * 100 + it.position.x }.toString()
+                .asSequence()
+                .filter { it.type == MapEntityType.Box }
+                .sumOf { it.position.y * 100 + it.position.x }.toString()
     }
 }

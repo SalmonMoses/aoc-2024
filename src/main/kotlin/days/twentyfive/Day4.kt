@@ -11,38 +11,38 @@ import org.koin.core.annotation.Single
 @Single
 @Day(4, 2025)
 class Day4 : DayTask {
-    override val spec1: TaskSpec?
+    override val spec1: TaskSpec
         get() = TaskSpec(
-            "..@@.@@@@.\n" +
-                    "@@@.@.@.@@\n" +
-                    "@@@@@.@.@@\n" +
-                    "@.@@@@..@.\n" +
-                    "@@.@@@@.@@\n" +
-                    ".@@@@@@@.@\n" +
-                    ".@.@.@.@@@\n" +
-                    "@.@@@.@@@@\n" +
-                    ".@@@@@@@@.\n" +
-                    "@.@.@@@.@.", "13"
+                "..@@.@@@@.\n" +
+                        "@@@.@.@.@@\n" +
+                        "@@@@@.@.@@\n" +
+                        "@.@@@@..@.\n" +
+                        "@@.@@@@.@@\n" +
+                        ".@@@@@@@.@\n" +
+                        ".@.@.@.@@@\n" +
+                        "@.@@@.@@@@\n" +
+                        ".@@@@@@@@.\n" +
+                        "@.@.@@@.@.", "13"
         )
-    override val spec2: TaskSpec?
+    override val spec2: TaskSpec
         get() = TaskSpec(
-            "..@@.@@@@.\n" +
-                    "@@@.@.@.@@\n" +
-                    "@@@@@.@.@@\n" +
-                    "@.@@@@..@.\n" +
-                    "@@.@@@@.@@\n" +
-                    ".@@@@@@@.@\n" +
-                    ".@.@.@.@@@\n" +
-                    "@.@@@.@@@@\n" +
-                    ".@@@@@@@@.\n" +
-                    "@.@.@@@.@.", "43"
+                "..@@.@@@@.\n" +
+                        "@@@.@.@.@@\n" +
+                        "@@@@@.@.@@\n" +
+                        "@.@@@@..@.\n" +
+                        "@@.@@@@.@@\n" +
+                        ".@@@@@@@.@\n" +
+                        ".@.@.@.@@@\n" +
+                        "@.@@@.@@@@\n" +
+                        ".@@@@@@@@.\n" +
+                        "@.@.@@@.@.", "43"
         )
 
     override fun task1(input: List<String>, params: ParamsMap): String {
         val grid = Grid(input.map { row -> row.map { it == '@' } })
         return grid
-            .count { point -> grid[point] && grid.getNeighborValuesDiagonal(point).count { it } < 4 }
-            .toString()
+                .count { point -> grid[point] && grid.getNeighborValuesDiagonal(point).count { it } < 4 }
+                .toString()
     }
 
     override fun task2(input: List<String>, params: ParamsMap): String {

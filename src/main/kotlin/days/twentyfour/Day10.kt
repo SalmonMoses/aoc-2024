@@ -14,25 +14,25 @@ import org.koin.core.annotation.Single
 class Day10 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(
-            "89010123\n" +
-                    "78121874\n" +
-                    "87430965\n" +
-                    "96549874\n" +
-                    "45678903\n" +
-                    "32019012\n" +
-                    "01329801\n" +
-                    "10456732", "36"
+                "89010123\n" +
+                        "78121874\n" +
+                        "87430965\n" +
+                        "96549874\n" +
+                        "45678903\n" +
+                        "32019012\n" +
+                        "01329801\n" +
+                        "10456732", "36"
         )
-    override val spec2: TaskSpec?
+    override val spec2: TaskSpec
         get() = TaskSpec(
-            "89010123\n" +
-                    "78121874\n" +
-                    "87430965\n" +
-                    "96549874\n" +
-                    "45678903\n" +
-                    "32019012\n" +
-                    "01329801\n" +
-                    "10456732", "81"
+                "89010123\n" +
+                        "78121874\n" +
+                        "87430965\n" +
+                        "96549874\n" +
+                        "45678903\n" +
+                        "32019012\n" +
+                        "01329801\n" +
+                        "10456732", "81"
         )
 
     private fun traceTrailToNine(start: Vector, grid: Grid<Int>): Int {

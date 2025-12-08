@@ -12,32 +12,32 @@ import org.koin.core.annotation.Single
 class Day13 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(
-            "Button A: X+94, Y+34\n" +
-                    "Button B: X+22, Y+67\n" +
-                    "Prize: X=8400, Y=5400\n" +
-                    "\n" +
-                    "Button A: X+26, Y+66\n" +
-                    "Button B: X+67, Y+21\n" +
-                    "Prize: X=12748, Y=12176\n" +
-                    "\n" +
-                    "Button A: X+17, Y+86\n" +
-                    "Button B: X+84, Y+37\n" +
-                    "Prize: X=7870, Y=6450\n" +
-                    "\n" +
-                    "Button A: X+69, Y+23\n" +
-                    "Button B: X+27, Y+71\n" +
-                    "Prize: X=18641, Y=10279", "480"
+                "Button A: X+94, Y+34\n" +
+                        "Button B: X+22, Y+67\n" +
+                        "Prize: X=8400, Y=5400\n" +
+                        "\n" +
+                        "Button A: X+26, Y+66\n" +
+                        "Button B: X+67, Y+21\n" +
+                        "Prize: X=12748, Y=12176\n" +
+                        "\n" +
+                        "Button A: X+17, Y+86\n" +
+                        "Button B: X+84, Y+37\n" +
+                        "Prize: X=7870, Y=6450\n" +
+                        "\n" +
+                        "Button A: X+69, Y+23\n" +
+                        "Button B: X+27, Y+71\n" +
+                        "Prize: X=18641, Y=10279", "480"
         )
     override val spec2: TaskSpec?
         get() = null
 
     private fun solveArcade(
-        ax: Double,
-        ay: Double,
-        bx: Double,
-        by: Double,
-        px: Double,
-        py: Double
+            ax: Double,
+            ay: Double,
+            bx: Double,
+            by: Double,
+            px: Double,
+            py: Double
     ): Double {
         /**
          * px = m * ax + n * bx
@@ -59,12 +59,12 @@ class Day13 : DayTask {
 
     override fun task1(input: List<String>, params: ParamsMap): String {
         val arcadeRegex = Regex(
-            "Button A: X[+]([0-9]+), Y[+]([0-9]+)\n" +
-                    "Button B: X[+]([0-9]+), Y[+]([0-9]+)\n" +
-                    "Prize: X=([0-9]+), Y=([0-9]+)"
+                "Button A: X[+]([0-9]+), Y[+]([0-9]+)\n" +
+                        "Button B: X[+]([0-9]+), Y[+]([0-9]+)\n" +
+                        "Prize: X=([0-9]+), Y=([0-9]+)"
         )
         val arcadeDescs = input.filter { it.trim().isNotEmpty() }
-            .joinToString("\n")
+                .joinToString("\n")
         return arcadeRegex.findAll(arcadeDescs).map {
             val ax = it.groupValues[1].toDouble()
             val ay = it.groupValues[2].toDouble()
@@ -78,12 +78,12 @@ class Day13 : DayTask {
 
     override fun task2(input: List<String>, params: ParamsMap): String {
         val arcadeRegex = Regex(
-            "Button A: X[+]([0-9]+), Y[+]([0-9]+)\n" +
-                    "Button B: X[+]([0-9]+), Y[+]([0-9]+)\n" +
-                    "Prize: X=([0-9]+), Y=([0-9]+)"
+                "Button A: X[+]([0-9]+), Y[+]([0-9]+)\n" +
+                        "Button B: X[+]([0-9]+), Y[+]([0-9]+)\n" +
+                        "Prize: X=([0-9]+), Y=([0-9]+)"
         )
         val arcadeDescs = input.filter { it.trim().isNotEmpty() }
-            .joinToString("\n")
+                .joinToString("\n")
         return arcadeRegex.findAll(arcadeDescs).map {
             val ax = it.groupValues[1].toDouble()
             val ay = it.groupValues[2].toDouble()

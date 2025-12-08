@@ -1,10 +1,10 @@
 package me.salmonmoses.days.twentyfour
 
-import org.koin.core.annotation.Single
-import me.salmonmoses.days.DayTask
-import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.days.Day
+import me.salmonmoses.days.DayTask
 import me.salmonmoses.days.ParamsMap
+import me.salmonmoses.days.TaskSpec
+import org.koin.core.annotation.Single
 import java.math.BigInteger
 
 object Disassembler {
@@ -70,25 +70,25 @@ object Disassembler {
 class Day17 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(
-            "Register A: 729\n" +
-                    "Register B: 0\n" +
-                    "Register C: 0\n" +
-                    "\n" +
-                    "Program: 0,1,5,4,3,0", "4,6,3,5,6,3,5,2,1,0"
+                "Register A: 729\n" +
+                        "Register B: 0\n" +
+                        "Register C: 0\n" +
+                        "\n" +
+                        "Program: 0,1,5,4,3,0", "4,6,3,5,6,3,5,2,1,0"
         )
-    override val spec2: TaskSpec?
+    override val spec2: TaskSpec
         get() = TaskSpec(
-            "Register A: 2024\n" +
-                    "Register B: 0\n" +
-                    "Register C: 0\n" +
-                    "\n" +
-                    "Program: 0,3,5,4,3,0", "117440"
+                "Register A: 2024\n" +
+                        "Register B: 0\n" +
+                        "Register C: 0\n" +
+                        "\n" +
+                        "Program: 0,3,5,4,3,0", "117440"
         )
 
     private data class Computer(
-        var registerA: BigInteger,
-        var registerB: BigInteger = BigInteger.ZERO,
-        var registerC: BigInteger = BigInteger.ZERO
+            var registerA: BigInteger,
+            var registerB: BigInteger = BigInteger.ZERO,
+            var registerC: BigInteger = BigInteger.ZERO
     ) {
         fun getOperand(op: BigInteger): BigInteger = when (op.toInt()) {
             0 -> BigInteger.ZERO

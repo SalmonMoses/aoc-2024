@@ -9,7 +9,7 @@ import org.koin.core.annotation.Single
 @Single
 @Day(5, 2019)
 class Day5 : DayTask {
-    override val spec1: TaskSpec?
+    override val spec1: TaskSpec
         get() = TaskSpec("3,0,4,0,99", "1")
     override val spec2: TaskSpec?
         get() = null

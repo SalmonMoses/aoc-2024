@@ -15,15 +15,15 @@ class Day9 : DayTask {
         get() = TODO("Not yet implemented")
 
     override fun task1(
-        input: List<String>,
-        params: ParamsMap
+            input: List<String>,
+            params: ParamsMap
     ): String {
         return ""
     }
 
     override fun task2(
-        input: List<String>,
-        params: ParamsMap
+            input: List<String>,
+            params: ParamsMap
     ): String {
         TODO("Not yet implemented")
     }

@@ -16,9 +16,9 @@ class Day11 : DayTask {
 
     private fun task(input: String, steps: Int): Long {
         var stones = input.split(" ")
-            .map(String::toLong)
-            .groupBy { it }
-            .mapValues { it.value.size.toLong() }
+                .map(String::toLong)
+                .groupBy { it }
+                .mapValues { it.value.size.toLong() }
         repeat(steps) {
             stones = blink(stones)
         }

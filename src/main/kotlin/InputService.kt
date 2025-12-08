@@ -14,14 +14,15 @@ class InputService(val httpClient: OkHttpClient, @Property("session") val sessio
         val url = "https://adventofcode.com/$year/day/$day/input"
         val outputFile = "input/$year/day${day}.txt"
         val request = Request.Builder()
-            .url(url)
-            .header("Cookie", "session=$session")
-            .build()
+                .url(url)
+                .header("Cookie", "session=$session")
+                .build()
         httpClient.newCall(request)
-            .execute()
-            .use { response ->
-                response.body?.byteStream()?.use { input -> File(outputFile).outputStream().use { input.copyTo(it) } }
-            }
+                .execute()
+                .use { response ->
+                    response.body?.byteStream()
+                            ?.use { input -> File(outputFile).outputStream().use { input.copyTo(it) } }
+                }
     }
 
     fun getDayInput(day: Int, year: Int): List<String> = File("input/$year", "day$day.txt").readLines()

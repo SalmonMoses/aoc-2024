@@ -11,35 +11,35 @@ import org.koin.core.annotation.Single
 class Day19 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(
-            "r, wr, b, g, bwu, rb, gb, br\n" +
-                    "\n" +
-                    "brwrr\n" +
-                    "bggr\n" +
-                    "gbbr\n" +
-                    "rrbgbr\n" +
-                    "ubwu\n" +
-                    "bwurrg\n" +
-                    "brgr\n" +
-                    "bbrgwb", "6"
+                "r, wr, b, g, bwu, rb, gb, br\n" +
+                        "\n" +
+                        "brwrr\n" +
+                        "bggr\n" +
+                        "gbbr\n" +
+                        "rrbgbr\n" +
+                        "ubwu\n" +
+                        "bwurrg\n" +
+                        "brgr\n" +
+                        "bbrgwb", "6"
         )
-    override val spec2: TaskSpec?
+    override val spec2: TaskSpec
         get() = TaskSpec(
-            "r, wr, b, g, bwu, rb, gb, br\n" +
-                    "\n" +
-                    "brwrr\n" +
-                    "bggr\n" +
-                    "gbbr\n" +
-                    "rrbgbr\n" +
-                    "ubwu\n" +
-                    "bwurrg\n" +
-                    "brgr\n" +
-                    "bbrgwb", "16"
+                "r, wr, b, g, bwu, rb, gb, br\n" +
+                        "\n" +
+                        "brwrr\n" +
+                        "bggr\n" +
+                        "gbbr\n" +
+                        "rrbgbr\n" +
+                        "ubwu\n" +
+                        "bwurrg\n" +
+                        "brgr\n" +
+                        "bbrgwb", "16"
         )
 
     private data class MemoizedTowelQuery(
-        val remainingPattern: String,
-        val patterns: Set<String>,
-        val patternLengthRange: IntRange
+            val remainingPattern: String,
+            val patterns: Set<String>,
+            val patternLengthRange: IntRange
     )
 
     private val memoizedTowelPossibility = mutableMapOf<MemoizedTowelQuery, Boolean>()

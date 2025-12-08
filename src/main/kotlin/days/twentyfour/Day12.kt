@@ -14,39 +14,39 @@ import org.koin.core.annotation.Single
 class Day12 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(
-            "RRRRIICCFF\n" +
-                    "RRRRIICCCF\n" +
-                    "VVRRRCCFFF\n" +
-                    "VVRCCCJFFF\n" +
-                    "VVVVCJJCFE\n" +
-                    "VVIVCCJJEE\n" +
-                    "VVIIICJJEE\n" +
-                    "MIIIIIJJEE\n" +
-                    "MIIISIJEEE\n" +
-                    "MMMISSJEEE", "1930"
+                "RRRRIICCFF\n" +
+                        "RRRRIICCCF\n" +
+                        "VVRRRCCFFF\n" +
+                        "VVRCCCJFFF\n" +
+                        "VVVVCJJCFE\n" +
+                        "VVIVCCJJEE\n" +
+                        "VVIIICJJEE\n" +
+                        "MIIIIIJJEE\n" +
+                        "MIIISIJEEE\n" +
+                        "MMMISSJEEE", "1930"
         )
-    override val spec2: TaskSpec?
+    override val spec2: TaskSpec
         get() = TaskSpec(
-            "AAAAAA\n" +
-                    "AAABBA\n" +
-                    "AAABBA\n" +
-                    "ABBAAA\n" +
-                    "ABBAAA\n" +
-                    "AAAAAA", "368"
+                "AAAAAA\n" +
+                        "AAABBA\n" +
+                        "AAABBA\n" +
+                        "ABBAAA\n" +
+                        "ABBAAA\n" +
+                        "AAAAAA", "368"
         )
 
     private val neighbors = listOf(
-        Vector(1, 0),
-        Vector(-1, 0),
-        Vector(0, 1),
-        Vector(0, -1)
+            Vector(1, 0),
+            Vector(-1, 0),
+            Vector(0, 1),
+            Vector(0, -1)
     )
 
     private val corners = listOf(
-        listOf(Vector(0, -1), Vector(1, -1), Vector(1, 0)),
-        listOf(Vector(0, 1), Vector(1, 1), Vector(1, 0)),
-        listOf(Vector(0, -1), Vector(-1, -1), Vector(-1, 0)),
-        listOf(Vector(0, 1), Vector(-1, 1), Vector(-1, 0)),
+            listOf(Vector(0, -1), Vector(1, -1), Vector(1, 0)),
+            listOf(Vector(0, 1), Vector(1, 1), Vector(1, 0)),
+            listOf(Vector(0, -1), Vector(-1, -1), Vector(-1, 0)),
+            listOf(Vector(0, 1), Vector(-1, 1), Vector(-1, 0)),
     )
 
     private data class Region(val points: Set<Vector>, val perimeter: Long) {
@@ -80,8 +80,8 @@ class Day12 : DayTask {
             val neighbors = neighbors.map { nextPoint + it }
             perimeter += neighbors.count { !grid.isValid(it) || grid[it] != regionChar }
             neighbors
-                .filter { grid.isValid(it) && it !in visited }
-                .forEach { neighbor -> frontier.add(neighbor) }
+                    .filter { grid.isValid(it) && it !in visited }
+                    .forEach { neighbor -> frontier.add(neighbor) }
         }
         return Region(region, perimeter)
     }
@@ -114,8 +114,8 @@ class Day12 : DayTask {
                 (xCorner && yCorner) || (!xCorner && !yCorner && xyCorner)
             }.count { it }
             grid.getNeighbors(nextPoint)
-                .filter { it !in visited }
-                .forEach { neighbor -> frontier.add(neighbor) }
+                    .filter { it !in visited }
+                    .forEach { neighbor -> frontier.add(neighbor) }
         }
         return SideRegion(region, sides)
     }

@@ -1,6 +1,7 @@
 package me.salmonmoses.days
 
 typealias ParamsMap = Map<String, Any>
+
 data class TaskSpec(val input: String, val expectedResult: String, val params: ParamsMap = mapOf())
 
 @Target(AnnotationTarget.CLASS)

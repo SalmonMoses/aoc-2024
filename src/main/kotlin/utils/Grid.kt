@@ -1,41 +1,26 @@
 package me.salmonmoses.utils
 
 import kotlin.math.absoluteValue
-import kotlin.math.max
 import kotlin.math.pow
 
 data class Vector(val x: Int, val y: Int) {
-    operator fun plus(delta: Vector): Vector {
-        return Vector(x + delta.x, y + delta.y)
-    }
+    operator fun plus(delta: Vector): Vector = Vector(x + delta.x, y + delta.y)
 
-    operator fun minus(delta: Vector): Vector {
-        return Vector(x - delta.x, y - delta.y)
-    }
+    operator fun minus(delta: Vector): Vector = Vector(x - delta.x, y - delta.y)
 
-    operator fun times(k: Int): Vector {
-        return Vector(x * k, y * k)
-    }
+    operator fun times(k: Int): Vector = Vector(x * k, y * k)
 
-    override operator fun equals(other: Any?): Boolean {
-        return other is Vector && x == other.x && y == other.y
-    }
+    override operator fun equals(other: Any?): Boolean = other is Vector && x == other.x && y == other.y
 
-    override fun hashCode(): Int {
-        return javaClass.hashCode()
-    }
+    override fun hashCode(): Int = javaClass.hashCode()
 
-    fun rotateClockwise(): Vector {
-        return Vector(-y, x)
-    }
+    fun rotateClockwise(): Vector = Vector(-y, x)
 
-    fun sqrtLength(): Double {
-        return x.toDouble().pow(2.0) + y.toDouble().pow(2.0)
-    }
+    fun sqrtLength(): Double = x.toDouble().pow(2.0) + y.toDouble().pow(2.0)
 
-    fun manhattan(other: Vector): Int {
-        return (x - other.x).absoluteValue + (y - other.y).absoluteValue
-    }
+    fun sqrtDistance(other: Vector): Double = (this - other).sqrtLength()
+
+    fun manhattan(other: Vector): Int = (x - other.x).absoluteValue + (y - other.y).absoluteValue
 }
 
 abstract class BaseGrid<T> : Iterable<Vector> {
@@ -45,13 +30,9 @@ abstract class BaseGrid<T> : Iterable<Vector> {
     abstract operator fun get(x: Int, y: Int): T
     open operator fun get(point: Vector): T = get(point.x, point.y)
 
-    open fun isValid(x: Int, y: Int): Boolean {
-        return x in 0..<width && y in 0..<height
-    }
+    open fun isValid(x: Int, y: Int): Boolean = x in 0..<width && y in 0..<height
 
-    fun isValid(point: Vector): Boolean {
-        return isValid(point.x, point.y)
-    }
+    fun isValid(point: Vector): Boolean = isValid(point.x, point.y)
 
     open fun getNeighbors(x: Int, y: Int): List<Vector> {
         val neighbors = mutableListOf<Vector>()
@@ -95,7 +76,7 @@ abstract class BaseGrid<T> : Iterable<Vector> {
     }
 
     override operator fun iterator(): Iterator<Vector> =
-        (0..<height).cartesianProduct(0..<width).map { (x, y) -> Vector(x, y) }.iterator()
+            (0..<height).cartesianProduct(0..<width).map { (x, y) -> Vector(x, y) }.iterator()
 }
 
 open class Grid<T>(final override val width: Int, final override val height: Int, init: (Vector) -> T) : BaseGrid<T>() {
@@ -115,10 +96,10 @@ open class Grid<T>(final override val width: Int, final override val height: Int
     fun getNeighborValues(point: Vector): List<T> = getNeighbors(point).map { this[it.x, it.y] }
 
     fun getNeighborValuesDiagonal(x: Int, y: Int): List<T> =
-        getNeighborsDiagonal(x, y).map { this[it.x, it.y] }
+            getNeighborsDiagonal(x, y).map { this[it.x, it.y] }
 
     fun getNeighborValuesDiagonal(point: Vector): List<T> =
-        getNeighborsDiagonal(point).map { this[it.x, it.y] }
+            getNeighborsDiagonal(point).map { this[it.x, it.y] }
 }
 
 class MutableGrid<T>(width: Int, height: Int, init: (Vector) -> T) : Grid<T>(width, height, init) {
@@ -142,11 +123,11 @@ class MutableGrid<T>(width: Int, height: Int, init: (Vector) -> T) : Grid<T>(wid
 }
 
 open class VirtualGrid<T>(
-    private val minWidth: Int,
-    private val maxWidth: Int,
-    private val minHeight: Int,
-    private val maxHeight: Int,
-    private val elements: Map<Vector, T>
+        private val minWidth: Int,
+        private val maxWidth: Int,
+        private val minHeight: Int,
+        private val maxHeight: Int,
+        private val elements: Map<Vector, T>
 ) : BaseGrid<T?>() {
     override val width: Int
         get() = maxWidth - minWidth
@@ -161,11 +142,11 @@ open class VirtualGrid<T>(
 }
 
 class MutableVirtualGrid<T>(
-    minWidth: Int,
-    maxWidth: Int,
-    minHeight: Int,
-    maxHeight: Int,
-    private val elements: MutableMap<Vector, T>
+        minWidth: Int,
+        maxWidth: Int,
+        minHeight: Int,
+        maxHeight: Int,
+        private val elements: MutableMap<Vector, T>
 ) : VirtualGrid<T>(minWidth, minHeight, maxWidth, maxHeight, elements) {
     operator fun set(x: Int, y: Int, value: T) {
         elements[Vector(x, y)] = value

@@ -6,8 +6,8 @@ enum class IteratorDirection {
 }
 
 class DequeIterator<out T>(
-    private val deque: ArrayDeque<out T>,
-    private val direction: IteratorDirection = IteratorDirection.FORWARD
+        private val deque: ArrayDeque<out T>,
+        private val direction: IteratorDirection = IteratorDirection.FORWARD
 ) : Iterator<T> {
     override fun hasNext(): Boolean = deque.isNotEmpty()
 

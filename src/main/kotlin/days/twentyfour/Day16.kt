@@ -14,39 +14,39 @@ import java.util.*
 class Day16 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(
-            "###############\n" +
-                    "#.......#....E#\n" +
-                    "#.#.###.#.###.#\n" +
-                    "#.....#.#...#.#\n" +
-                    "#.###.#####.#.#\n" +
-                    "#.#.#.......#.#\n" +
-                    "#.#.#####.###.#\n" +
-                    "#...........#.#\n" +
-                    "###.#.#####.#.#\n" +
-                    "#...#.....#.#.#\n" +
-                    "#.#.#.###.#.#.#\n" +
-                    "#.....#...#.#.#\n" +
-                    "#.###.#.#.#.#.#\n" +
-                    "#S..#.....#...#\n" +
-                    "###############", "7036"
+                "###############\n" +
+                        "#.......#....E#\n" +
+                        "#.#.###.#.###.#\n" +
+                        "#.....#.#...#.#\n" +
+                        "#.###.#####.#.#\n" +
+                        "#.#.#.......#.#\n" +
+                        "#.#.#####.###.#\n" +
+                        "#...........#.#\n" +
+                        "###.#.#####.#.#\n" +
+                        "#...#.....#.#.#\n" +
+                        "#.#.#.###.#.#.#\n" +
+                        "#.....#...#.#.#\n" +
+                        "#.###.#.#.#.#.#\n" +
+                        "#S..#.....#...#\n" +
+                        "###############", "7036"
         )
-    override val spec2: TaskSpec?
+    override val spec2: TaskSpec
         get() = TaskSpec(
-            "###############\n" +
-                    "#.......#....E#\n" +
-                    "#.#.###.#.###.#\n" +
-                    "#.....#.#...#.#\n" +
-                    "#.###.#####.#.#\n" +
-                    "#.#.#.......#.#\n" +
-                    "#.#.#####.###.#\n" +
-                    "#...........#.#\n" +
-                    "###.#.#####.#.#\n" +
-                    "#...#.....#.#.#\n" +
-                    "#.#.#.###.#.#.#\n" +
-                    "#.....#...#.#.#\n" +
-                    "#.###.#.#.#.#.#\n" +
-                    "#S..#.....#...#\n" +
-                    "###############", "45"
+                "###############\n" +
+                        "#.......#....E#\n" +
+                        "#.#.###.#.###.#\n" +
+                        "#.....#.#...#.#\n" +
+                        "#.###.#####.#.#\n" +
+                        "#.#.#.......#.#\n" +
+                        "#.#.#####.###.#\n" +
+                        "#...........#.#\n" +
+                        "###.#.#####.#.#\n" +
+                        "#...#.....#.#.#\n" +
+                        "#.#.#.###.#.#.#\n" +
+                        "#.....#...#.#.#\n" +
+                        "#.###.#.#.#.#.#\n" +
+                        "#S..#.....#...#\n" +
+                        "###############", "45"
         )
 
     private data class PathfindingInfo(val cameFrom: Vector?, val direction: Vector, val score: Int)
@@ -74,7 +74,7 @@ class Day16 : DayTask {
             }
         })
         val infos = mutableMapOf(
-            start to PathfindingInfo(null, Vector(1, 0), 0),
+                start to PathfindingInfo(null, Vector(1, 0), 0),
         )
         val frontier = PriorityQueue<Pair<Vector, Int>> { first, second -> first.second - second.second }
         frontier.offer(start to 0)
@@ -90,7 +90,7 @@ class Day16 : DayTask {
                 if (!grid[neighbor]) {
                     val direction = neighbor - current
                     val newScore =
-                        currentInfo.score + (if (direction == currentInfo.direction) 1 else 1001)
+                            currentInfo.score + (if (direction == currentInfo.direction) 1 else 1001)
                     if (neighbor !in infos || newScore < infos[neighbor]!!.score) {
                         infos[neighbor] = PathfindingInfo(current, direction, newScore)
                         frontier.offer(neighbor to end.manhattan(neighbor))
@@ -124,7 +124,7 @@ class Day16 : DayTask {
             }
         })
         val infos = mutableMapOf(
-            start to PathfindingInfo(null, Vector(1, 0), 0),
+                start to PathfindingInfo(null, Vector(1, 0), 0),
         )
         val frontier = PriorityQueue<Pair<Vector, Int>> { first, second -> first.second - second.second }
         frontier.offer(start to 0)
@@ -140,7 +140,7 @@ class Day16 : DayTask {
                 if (!grid[neighbor]) {
                     val direction = neighbor - current
                     val newScore =
-                        currentInfo.score + (if (direction == currentInfo.direction) 1 else 1001)
+                            currentInfo.score + (if (direction == currentInfo.direction) 1 else 1001)
                     if (neighbor !in infos || newScore < infos[neighbor]!!.score) {
                         infos[neighbor] = PathfindingInfo(current, direction, newScore)
                         frontier.add(neighbor to end.manhattan(neighbor))

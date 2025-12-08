@@ -15,8 +15,8 @@ import kotlin.reflect.full.findAnnotation
 
 @Single
 class TaskRunner(
-    tasks: List<DayTask>,
-    val inputService: InputService,
+        tasks: List<DayTask>,
+        val inputService: InputService,
 ) {
     private val days: Map<Int, DayTask> = tasks.map { task ->
         task::class.findAnnotation<Day>()?.let {
@@ -73,13 +73,18 @@ class TaskRunner(
         }
     }
 
-    private fun checkSpec(day: DayTask, solver: DayTask.(List<String>, ParamsMap) -> String, spec: TaskSpec, title: String) {
+    private fun checkSpec(
+            day: DayTask,
+            solver: DayTask.(List<String>, ParamsMap) -> String,
+            spec: TaskSpec,
+            title: String
+    ) {
         try {
             val time = System.currentTimeMillis()
             val actual = day.solver(spec.input.split("\n"), spec.params)
             val finishTime = System.currentTimeMillis() - time
             println(formatSpecCheckResult(title, actual, spec.expectedResult, finishTime))
-        } catch (e: kotlin.NotImplementedError) {
+        } catch (e: NotImplementedError) {
             println(getNotImplementedError(title))
         }
     }
@@ -91,7 +96,7 @@ class TaskRunner(
             val finishTime = System.currentTimeMillis() - time
             print(Colored.backgroundForeground(" ${title.uppercase()} ", OutputColor.BLUE, OutputColor.BLACK))
             println(" Solution = $solution [${finishTime} ms]")
-        } catch (e: kotlin.NotImplementedError) {
+        } catch (e: NotImplementedError) {
             println(getNotImplementedError(title))
         }
     }
@@ -101,31 +106,31 @@ class TaskRunner(
                 " ${title.uppercase()} ",
                 OutputColor.GRAY,
                 OutputColor.BLACK,
-            )
+        )
         val body = Colored.foreground(
                 " Not implemented yet",
                 OutputColor.GRAY
-            )
+        )
         return "${title}${body}"
     }
 
     private fun formatSpecCheckResult(
-        title: String,
-        actualResult: String,
-        expectedResult: String,
-        finishTime: Long
+            title: String,
+            actualResult: String,
+            expectedResult: String,
+            finishTime: Long
     ): String {
         val failed = actualResult != expectedResult
         val sign = if (failed) "!=" else "=="
         val color = if (failed) OutputColor.RED else OutputColor.GREEN
         val renderedTitle = Colored.backgroundForeground(
-            " ${title.uppercase()} ",
-            color,
-            OutputColor.BLACK,
+                " ${title.uppercase()} ",
+                color,
+                OutputColor.BLACK,
         )
         val renderedResult = Colored.foreground(
-            "$actualResult $sign $expectedResult [$finishTime ms]",
-            color
+                "$actualResult $sign $expectedResult [$finishTime ms]",
+                color
         )
         return "$renderedTitle $renderedResult"
     }

@@ -12,21 +12,21 @@ import kotlin.math.absoluteValue
 class Day2 : DayTask {
     override val spec1: TaskSpec
         get() = TaskSpec(
-            "7 6 4 2 1\n" +
-                    "1 2 7 8 9\n" +
-                    "9 7 6 2 1\n" +
-                    "1 3 2 4 5\n" +
-                    "8 6 4 4 1\n" +
-                    "1 3 6 7 9", "2"
+                "7 6 4 2 1\n" +
+                        "1 2 7 8 9\n" +
+                        "9 7 6 2 1\n" +
+                        "1 3 2 4 5\n" +
+                        "8 6 4 4 1\n" +
+                        "1 3 6 7 9", "2"
         )
-    override val spec2: TaskSpec?
+    override val spec2: TaskSpec
         get() = TaskSpec(
-            "7 6 4 2 1\n" +
-                    "1 2 7 8 9\n" +
-                    "9 7 6 2 1\n" +
-                    "1 3 2 4 5\n" +
-                    "8 6 4 4 1\n" +
-                    "1 3 6 7 9", "4"
+                "7 6 4 2 1\n" +
+                        "1 2 7 8 9\n" +
+                        "9 7 6 2 1\n" +
+                        "1 3 2 4 5\n" +
+                        "8 6 4 4 1\n" +
+                        "1 3 6 7 9", "4"
         )
 
     fun isSafe(levels: List<Int>): Boolean {
