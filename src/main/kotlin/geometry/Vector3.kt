@@ -1,4 +1,4 @@
-package me.salmonmoses.utils
+package me.salmonmoses.geometry
 
 import kotlin.math.absoluteValue
 import kotlin.math.pow

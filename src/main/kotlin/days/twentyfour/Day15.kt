@@ -4,6 +4,9 @@ import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
 import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
+import me.salmonmoses.geometry.BaseGrid
+import me.salmonmoses.geometry.MutableGrid
+import me.salmonmoses.geometry.Vector
 import me.salmonmoses.utils.*
 import org.koin.core.annotation.Single
 
