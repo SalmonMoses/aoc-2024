@@ -21,4 +21,6 @@ data class Vector(val x: Int, val y: Int) {
     fun sqrtDistance(other: Vector): Double = (this - other).sqrtLength()
 
     fun manhattan(other: Vector): Int = (x - other.x).absoluteValue + (y - other.y).absoluteValue
+
+    fun midpoint(other: Vector): Vector = Vector((x - other.x) / 2, (y - other.y) / 2)
 }

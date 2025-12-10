@@ -7,8 +7,14 @@ import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.geometry.Box
 import me.salmonmoses.geometry.Polygon
 import me.salmonmoses.geometry.Vector
+import me.salmonmoses.geometry.VirtualGrid
 import me.salmonmoses.utils.cartesianProductWithoutRepeats
 import org.koin.core.annotation.Single
+import java.awt.Dimension
+import java.awt.image.BufferedImage
+import java.io.FileOutputStream
+import java.io.OutputStream
+import javax.imageio.ImageIO
 
 @Single
 @Day(9, 2025)
@@ -24,7 +30,7 @@ class Day9 : DayTask {
                         "2,3\n" +
                         "7,3", "50"
         )
-    override val spec2: TaskSpec
+    override val spec2: TaskSpec?
         get() = TaskSpec(
                 "7,1\n" +
                         "11,1\n" +
@@ -46,7 +52,7 @@ class Day9 : DayTask {
         }
 
         return redTiles.cartesianProductWithoutRepeats()
-                .maxOf { Box(it.first, it.second).area }
+                .maxOf { Box(it).area }
                 .toString()
     }
 
@@ -63,7 +69,7 @@ class Day9 : DayTask {
 
         return redTiles.cartesianProductWithoutRepeats()
                 .map(::Box)
-                .sortedBy(Box::area)
-                .first(polygon::intersects).area.toString()
+                .sortedByDescending(Box::area)
+                .first(polygon::includes).area.toString()
     }
 }
