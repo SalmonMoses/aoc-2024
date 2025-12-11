@@ -37,25 +37,25 @@ class Day11 : DayTask {
                 "ggg: out\n" +
                 "hhh: out", "2")
 
-    fun tracePaths(graph: Map<String, List<String>>, start: String, end: String, visited: Set<String>): Int {
-        if (start == end) return 1
+    val memoized: MutableMap<Pair<String, String>, Long> = mutableMapOf()
 
-        val connections = graph[start]!!
-        var pathsFromHere = 0
+    fun tracePaths(graph: Map<String, List<String>>, start: String, end: String, visited: Set<String>): Long {
+        val startEndPair = Pair(start, end)
+        if (startEndPair in memoized) {
+            return memoized[startEndPair]!!
+        }
+
+        if (start == end) {
+            memoized[startEndPair] = 1L
+            return 1L
+        }
+
+        val connections = graph[start] ?: return 0L
+        var pathsFromHere = 0L
         for (connection in connections.filter { it !in visited }) {
             pathsFromHere += tracePaths(graph, connection, end, visited + start)
         }
-        return pathsFromHere
-    }
-
-    fun findAllPaths(graph: Map<String, List<String>>, start: String, end: String, visited: Set<String>): List<Set<String>> {
-        if (start == end) return listOf(visited)
-
-        val connections = graph[start]!!
-        val pathsFromHere = mutableListOf<Set<String>>()
-        for (connection in connections.filter { it !in visited }) {
-            pathsFromHere += findAllPaths(graph, connection, end, visited + start)
-        }
+        memoized[startEndPair] = pathsFromHere
         return pathsFromHere
     }
 
@@ -69,6 +69,7 @@ class Day11 : DayTask {
             start to tokens.drop(1)
         }
 
+        memoized.clear()
         return tracePaths(graph, "you", "out", setOf()).toString()
     }
 
@@ -82,8 +83,13 @@ class Day11 : DayTask {
             start to tokens.drop(1)
         }
 
-        val requiredNodes = listOf("dac", "fft")
-        return findAllPaths(graph, "svr", "out", setOf())
-                .count { it.containsAll(requiredNodes) }.toString()
+        memoized.clear()
+        val svrFft = tracePaths(graph, "svr", "fft", setOf())
+        val fftDac = tracePaths(graph, "fft", "dac", setOf())
+        val dacOut = tracePaths(graph, "dac", "out", setOf())
+        val svrDac = tracePaths(graph, "svr", "dac", setOf())
+        val dacFft = tracePaths(graph, "dac", "fft", setOf())
+        val fftOut = tracePaths(graph, "fft", "out", setOf())
+        return (svrFft * fftDac * dacOut + svrDac * dacFft * fftOut).toString()
     }
 }

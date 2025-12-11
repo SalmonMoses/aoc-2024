@@ -12,7 +12,7 @@ repositories {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_24
+    sourceCompatibility = JavaVersion.VERSION_21
 }
 
 dependencies {
