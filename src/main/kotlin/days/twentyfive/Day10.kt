@@ -7,7 +7,35 @@ import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.DequeIterator
 import org.koin.core.annotation.Single
 import java.util.PriorityQueue
+import kotlin.Boolean
+import kotlin.Int
+import kotlin.Long
+import kotlin.Pair
+import kotlin.String
+import kotlin.collections.ArrayDeque
+import kotlin.collections.List
+import kotlin.collections.all
+import kotlin.collections.contains
+import kotlin.collections.drop
+import kotlin.collections.filter
+import kotlin.collections.isNotEmpty
+import kotlin.collections.iterator
+import kotlin.collections.last
+import kotlin.collections.map
+import kotlin.collections.mutableMapOf
 import kotlin.collections.none
+import kotlin.collections.set
+import kotlin.collections.sum
+import kotlin.collections.sumOf
+import kotlin.collections.takeWhile
+import kotlin.collections.withIndex
+import kotlin.collections.zip
+import kotlin.text.map
+import kotlin.text.split
+import kotlin.text.startsWith
+import kotlin.text.substring
+import kotlin.text.toInt
+import kotlin.to
 
 typealias Button = List<Int>
 typealias Joltage = List<Int>
@@ -51,7 +79,7 @@ class Day10 : DayTask {
         val visitedStates = mutableMapOf(initialState to 0)
 
         val nextStates = PriorityQueue<Pair<Joltage, Int>> { first, second -> first.second - second.second }
-        nextStates.add(initialState to 0)
+        nextStates.offer(initialState to 0)
         while (nextStates.isNotEmpty()) {
             val state = nextStates.poll().first
             if (state == machine.joltage) {
@@ -101,15 +129,17 @@ class Day10 : DayTask {
             input: List<String>,
             params: ParamsMap
     ): String {
-        val machines = input.map(this::parseMachine)
-        return machines.sumOf { simulateMachine(it) }.toString()
+        return input.map(this::parseMachine)
+                .sumOf(this::simulateMachine)
+                .toString()
     }
 
     override fun task2(
             input: List<String>,
             params: ParamsMap
     ): String {
-        val machines = input.map(this::parseMachine)
-        return machines.sumOf { simulateMachineJoltage(it) }.toString()
+        return input.map(this::parseMachine)
+                .sumOf(this::simulateMachineJoltage)
+                .toString()
     }
 }
