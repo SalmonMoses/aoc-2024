@@ -66,26 +66,21 @@ class Day10 : DayTask {
         return visitedStates[machine.target] ?: Long.MAX_VALUE
     }
 
-    fun simulateMachineJoltage(machine: Machine): Long {
-        val ctx = Context()
-        with(ctx) {
-            val opt = ctx.mkOptimize()
-            val vars = machine.buttons.indices.map { ctx.mkIntConst("b$it") }
-            vars.forEach { opt.Add(ctx.mkGe(it, ctx.mkInt(0))) }
-            machine.joltage.indices.forEach { i ->
-                val terms = machine.buttons.withIndex().filter { i in it.value }.map { vars[it.index] }
-                if (terms.isNotEmpty()) {
-                    val sum = if (terms.size == 1) terms[0] else ctx.mkAdd(*terms.toTypedArray())
-                    opt.Add(ctx.mkEq(sum, ctx.mkInt(machine.joltage[i])))
-                }
-            }
-            opt.MkMinimize(ctx.mkAdd(*vars.toTypedArray()))
-            return if (opt.Check() == Status.SATISFIABLE) {
-                vars.sumOf { opt.model.evaluate(it, false).toString().toLong() }
-            } else {
-                0L
+    fun simulateMachineJoltage(machine: Machine): Long = Context().use { ctx ->
+        val opt = ctx.mkOptimize()
+        val vars = machine.buttons.indices.map { ctx.mkIntConst("b$it") }
+        vars.forEach { opt.Add(ctx.mkGe(it, ctx.mkInt(0))) }
+        machine.joltage.indices.forEach { i ->
+            val terms = machine.buttons.withIndex().filter { i in it.value }.map { vars[it.index] }
+            if (terms.isNotEmpty()) {
+                val sum = if (terms.size == 1) terms[0] else ctx.mkAdd(*terms.toTypedArray())
+                opt.Add(ctx.mkEq(sum, ctx.mkInt(machine.joltage[i])))
             }
         }
+        opt.MkMinimize(ctx.mkAdd(*vars.toTypedArray()))
+        if (opt.Check() == Status.SATISFIABLE)
+            vars.sumOf { opt.model.evaluate(it, false).toString().toLong() }
+        else 0L
     }
 
     override fun task1(

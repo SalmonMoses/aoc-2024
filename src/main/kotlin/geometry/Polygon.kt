@@ -1,7 +1,5 @@
 package me.salmonmoses.geometry
 
-import me.salmonmoses.utils.rangesOverlap
-
 class Polygon(val vertices: List<Vector>) {
     val edges: List<Box>
 
@@ -23,31 +21,22 @@ class Polygon(val vertices: List<Vector>) {
         return intersections % 2 == 1 || (point in vertices && intersections % 2 == 0)
     }
 
-    fun intersects(other: Box): Boolean = edges.any { e ->
-        if (e.isHorizontalLine && other.isHorizontalLine) {
-            e.minY == other.minY && rangesOverlap(e.minX..e.maxX, other.minX..other.maxX)
-        } else if (e.isVerticalLine && other.isVerticalLine) {
-            e.minX == other.minX && rangesOverlap(e.minY..e.maxY, other.minY..other.maxY)
-        } else if (e.isVerticalLine && other.isHorizontalLine) {
-            e.minX in other.minX..other.maxX && other.minY in e.minY..e.maxY
-        } else if (e.isHorizontalLine && other.isVerticalLine) {
-            other.minX in e.minX..e.maxX && e.minY in other.minY..other.maxY
-        } else {
-            TODO()
+    fun intersects(other: Box): Boolean {
+        for (edge in edges) {
+            val s = edge.firstCorner
+            val e = edge.secondCorner
+            if (s.x == e.x && s.x in (other.minX + 1)..<other.maxX && maxOf(minOf(s.y, e.y), other.minY) < minOf(
+                            maxOf(s.y, e.y), other.maxY
+                    ) || s.y == e.y && s.y in (other.minY + 1)..<other.maxY && maxOf(
+                            minOf(s.x, e.x),
+                            other.minX
+                    ) < minOf(
+                            maxOf(s.x, e.x), other.maxX
+                    )
+            ) return true
         }
+
+        return false
     }
 
-    fun includes(other: Box): Boolean =
-            other.topLeft in this
-                    && other.topRight in this
-                    && other.bottomLeft in this
-                    && other.bottomRight in this
-                    && other.topRight.midpoint(other.topLeft) in this
-                    && other.bottomRight.midpoint(other.topRight) in this
-                    && other.bottomLeft.midpoint(other.topLeft) in this
-                    && other.bottomRight.midpoint(other.bottomLeft) in this
-//                    && !intersects(Box(other.topLeft, other.topRight))
-//                    && !intersects(Box(other.topRight, other.bottomRight))
-//                    && !intersects(Box(other.bottomRight, other.bottomLeft))
-//                    && !intersects(Box(other.bottomLeft, other.topLeft))
 }

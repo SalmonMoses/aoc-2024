@@ -70,6 +70,6 @@ class Day9 : DayTask {
         return redTiles.cartesianProductWithoutRepeats()
                 .map(::Box)
                 .sortedByDescending(Box::area)
-                .first(polygon::includes).area.toString()
+                .first { !polygon.intersects(it) }.area.toString()
     }
 }
