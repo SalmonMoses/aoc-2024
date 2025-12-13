@@ -11,5 +11,5 @@ fun main() {
     }.koin
 
 //    koin.get<TaskRunner>().runToday()
-    koin.get<TaskRunner>().runDay(10, 2025)
+    koin.get<TaskRunner>().runDay(9, 2025)
 }
