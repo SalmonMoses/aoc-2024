@@ -74,6 +74,26 @@ class Day10 : DayTask {
         return Machine(targetState, buttons, joltage)
     }
 
+    fun simulateMachine(machine: Machine): Long {
+        val initialState = List(machine.target.size, { false })
+        val visitedStates = mutableMapOf(initialState to 0L)
+
+        val nextStates = ArrayDeque<MachineState>()
+        nextStates.add(initialState)
+        for (state in DequeIterator(nextStates)) {
+            val minPathToCurrentState = visitedStates[state]!!
+            for (button in machine.buttons) {
+                val nextState = state.withIndex().map { (i, current) -> if (i in button) !current else current }
+                if (nextState !in visitedStates || visitedStates[nextState]!! > minPathToCurrentState + 1) {
+                    visitedStates[nextState] = minPathToCurrentState + 1
+                    nextStates.add(nextState)
+                }
+            }
+        }
+
+        return visitedStates[machine.target] ?: Long.MAX_VALUE
+    }
+
     fun simulateMachineJoltage(machine: Machine): Long {
         val initialState = List(machine.joltage.size, { 0 })
         val visitedStates = mutableMapOf(initialState to 0)
@@ -103,26 +123,6 @@ class Day10 : DayTask {
         }
 
         return visitedStates[machine.joltage]?.toLong() ?: Long.MAX_VALUE
-    }
-
-    fun simulateMachine(machine: Machine): Long {
-        val initialState = List(machine.target.size, { false })
-        val visitedStates = mutableMapOf(initialState to 0L)
-
-        val nextStates = ArrayDeque<MachineState>()
-        nextStates.add(initialState)
-        for (state in DequeIterator(nextStates)) {
-            val minPathToCurrentState = visitedStates[state]!!
-            for (button in machine.buttons) {
-                val nextState = state.withIndex().map { (i, current) -> if (i in button) !current else current }
-                if (nextState !in visitedStates || visitedStates[nextState]!! > minPathToCurrentState + 1) {
-                    visitedStates[nextState] = minPathToCurrentState + 1
-                    nextStates.add(nextState)
-                }
-            }
-        }
-
-        return visitedStates[machine.target] ?: Long.MAX_VALUE
     }
 
     override fun task1(

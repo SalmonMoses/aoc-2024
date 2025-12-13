@@ -10,5 +10,6 @@ fun main() {
         modules(TaskRunnerModule().module)
     }.koin
 
-    koin.get<TaskRunner>().runToday()
+//    koin.get<TaskRunner>().runToday()
+    koin.get<TaskRunner>().runDay(12, 2025)
 }
