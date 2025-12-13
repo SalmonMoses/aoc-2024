@@ -1,44 +1,16 @@
 package me.salmonmoses.days.twentyfive
 
+import com.microsoft.z3.Context
+import com.microsoft.z3.Status
 import me.salmonmoses.days.Day
 import me.salmonmoses.days.DayTask
 import me.salmonmoses.days.ParamsMap
 import me.salmonmoses.days.TaskSpec
 import me.salmonmoses.utils.DequeIterator
 import org.koin.core.annotation.Single
-import java.util.PriorityQueue
-import kotlin.Boolean
-import kotlin.Int
-import kotlin.Long
-import kotlin.Pair
-import kotlin.String
-import kotlin.collections.ArrayDeque
-import kotlin.collections.List
-import kotlin.collections.all
-import kotlin.collections.contains
-import kotlin.collections.drop
-import kotlin.collections.filter
-import kotlin.collections.isNotEmpty
-import kotlin.collections.iterator
-import kotlin.collections.last
-import kotlin.collections.map
-import kotlin.collections.mutableMapOf
-import kotlin.collections.none
-import kotlin.collections.set
-import kotlin.collections.sum
-import kotlin.collections.sumOf
-import kotlin.collections.takeWhile
-import kotlin.collections.withIndex
-import kotlin.collections.zip
-import kotlin.text.map
-import kotlin.text.split
-import kotlin.text.startsWith
-import kotlin.text.substring
-import kotlin.text.toInt
-import kotlin.to
 
 typealias Button = List<Int>
-typealias Joltage = List<Int>
+//typealias Joltage = List<Int>
 typealias MachineState = List<Boolean>
 
 @Single
@@ -95,34 +67,25 @@ class Day10 : DayTask {
     }
 
     fun simulateMachineJoltage(machine: Machine): Long {
-        val initialState = List(machine.joltage.size, { 0 })
-        val visitedStates = mutableMapOf(initialState to 0)
-
-        val nextStates = PriorityQueue<Pair<Joltage, Int>> { first, second -> first.second - second.second }
-        nextStates.offer(initialState to 0)
-        while (nextStates.isNotEmpty()) {
-            val state = nextStates.poll().first
-            if (state == machine.joltage) {
-                break
-            }
-
-            val remainingJoltage = machine.joltage.zip(state).map { it.first - it.second }
-            val heurestics = remainingJoltage.sum()
-            val minPathToCurrentState = visitedStates[state]!!
-            val validNextButtons = machine.buttons.filter { btn ->
-                btn.none { remainingJoltage[it] == 0 }
-            }
-            for (button in validNextButtons) {
-                val nextState = state.withIndex().map { (i, current) -> if (i in button) current + 1 else current }
-                val isValid = nextState.withIndex().all { (i, j) -> j <= machine.joltage[i] }
-                if (isValid && (nextState !in visitedStates || visitedStates[nextState]!! > minPathToCurrentState + 1)) {
-                    visitedStates[nextState] = minPathToCurrentState + 1
-                    nextStates.offer(nextState to (minPathToCurrentState + heurestics))
+        val ctx = Context()
+        with(ctx) {
+            val opt = ctx.mkOptimize()
+            val vars = machine.buttons.indices.map { ctx.mkIntConst("b$it") }
+            vars.forEach { opt.Add(ctx.mkGe(it, ctx.mkInt(0))) }
+            machine.joltage.indices.forEach { i ->
+                val terms = machine.buttons.withIndex().filter { i in it.value }.map { vars[it.index] }
+                if (terms.isNotEmpty()) {
+                    val sum = if (terms.size == 1) terms[0] else ctx.mkAdd(*terms.toTypedArray())
+                    opt.Add(ctx.mkEq(sum, ctx.mkInt(machine.joltage[i])))
                 }
             }
+            opt.MkMinimize(ctx.mkAdd(*vars.toTypedArray()))
+            return if (opt.Check() == Status.SATISFIABLE) {
+                vars.sumOf { opt.model.evaluate(it, false).toString().toLong() }
+            } else {
+                0L
+            }
         }
-
-        return visitedStates[machine.joltage]?.toLong() ?: Long.MAX_VALUE
     }
 
     override fun task1(

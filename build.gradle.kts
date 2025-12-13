@@ -33,6 +33,8 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
+
+    implementation("tools.aqua:z3-turnkey:4.14.1")
 }
 
 tasks.test {
